@@ -1,27 +1,28 @@
 'use client';
 
 import Image from "next/image";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import classes from "./classes";
+import useClickOutside from "@/hooks/useClickOutside";
 
 interface ISelectBoxProps {
   className?: string;
   placeholder?: string;
   value: string;
-  options?: string[];
+  options: string[];
   onSelect: (value: string) => void;
 }
-
-const items = ['All', 'Fries', 'Noodles', 'Dessert', 'Diet']
 
 const SelectBox = ({
   className,
   placeholder,
   value,
-  options = items,
+  options,
   onSelect,
 }: ISelectBoxProps) => {
   const [isOpen, setIsOpen] = useState(false);
+  const optionRef = useRef<HTMLDivElement | null>(null);
+  useClickOutside(optionRef, () => setIsOpen(false))
 
   const handleSelect = (value: string) => {
     onSelect(value);
@@ -37,14 +38,13 @@ const SelectBox = ({
   })()
 
   return (
-    <div className={className}>
+    <div ref={optionRef} className={className}>
       <div
         className={classes.selectContent}
         onClick={() => setIsOpen((prev) => !prev)}
       >
         {placeholderElem}
 
-        {/* TODO: CHEVRON DOWN ICON LATER */}
         <Image
           src="assets/expand.svg"
           width={20}
@@ -54,10 +54,11 @@ const SelectBox = ({
       </div>
 
       {isOpen && (
-        <ul className="bg-white px-2 py-1 rounded-md mt-2 absolute">
+        <ul className={classes.ulFloat}>
           {options.map((i) => (
             <li
-              key={i} className="hover:text-orange-600 cursor-pointer select-none"
+              key={i}
+              className={classes.selectOption(value === i)}
               onClick={() => handleSelect(i)}
             >
               {i}
@@ -65,6 +66,7 @@ const SelectBox = ({
           ))}
         </ul>
       )}
+
     </div>
   )
 }

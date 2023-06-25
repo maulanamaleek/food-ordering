@@ -8,10 +8,7 @@ const classes = {
   linkSelected: "text-orange-600 font-semibold",
 
   // mobile only
-  mDrawerOverlay: "bg-gray-500 bg-opacity-50 fixed w-full h-full top-0 left-0",
   mOpenNav: "sm:hidden",
-  mDrawerContainer: "w-56 h-full bg-white fixed right-0 px-5",
-  mCloseNav: "fixed top-4 right-4 z-30",
   mLinks: "relative top-14 flex gap-4 flex-col",
 }
 
