@@ -19,7 +19,7 @@ const Navbar = () => {
         <h1 className={classes.logo}>Food.</h1>
 
         <div className={classes.links}>
-          <Link href="/" className={classes.linkSelected}>Discover Menus</Link>
+          <Link href="/" className={classes.linkSelected}>Discover</Link>
           <Link href="/">Cart</Link>
         </div>
 
@@ -29,7 +29,7 @@ const Navbar = () => {
           width={30}
           height={30}
           alt="navigation menu"
-          onClick={() => setIsDrawerOpen((prev) => !prev)}
+          onClick={() => setIsDrawerOpen(true)}
         />
       </div>
 

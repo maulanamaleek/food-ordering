@@ -22,7 +22,7 @@ const NavigationDrawer = ({
         />
 
         <div className={classes.mLinks}>
-          <Link href="/" className={classes.linkSelected}>Discover Menus</Link>
+          <Link href="/" className={classes.linkSelected}>Discover</Link>
           <Link href="/">Cart</Link>
         </div>
       </div>

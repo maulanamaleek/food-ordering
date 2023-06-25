@@ -1,5 +1,8 @@
 {
   "extends": "next/core-web-vitals",
+  "plugins": [
+    "@typescript-eslint/eslint-plugin"
+  ],
   "rules": {
     "no-nested-ternary": "error",
     "no-console": "error",
@@ -15,7 +18,7 @@
     "prefer-const": "warn",
     "no-var": "error",
     "no-useless-return": "error",
-    "no-unused-vars": "error",
+    "@typescript-eslint/no-unused-vars": "error",
     "no-magic-numbers": "error",
     "no-inline-comments": "warn",
     "space-before-blocks": "error",
