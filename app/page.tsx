@@ -1,3 +1,4 @@
+import Filter from "@/components/Filter";
 import FoodCard from "@/components/FoodCard";
 
 const dummyFoods = [
@@ -33,8 +34,11 @@ const dummyFoods = [
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between sm:p-24 mt-24 sm:mt-0">
-      <div className="flex flex-wrap w-full justify-center gap-4">
+    <main className="flex min-h-screen flex-col px-4 gap-5 mx-auto sm:w-3/4 mt-24">
+      <Filter />
+
+      <h1 className="font-bold text-lg">Discover the best foods &rarr;</h1>
+      <div className="flex flex-wrap w-full justify-between sm:justify-center gap-x-2 gap-y-5">
         {dummyFoods.map((food) => (
           <FoodCard
             key={food.id}
