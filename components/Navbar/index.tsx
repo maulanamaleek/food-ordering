@@ -17,34 +17,36 @@ const Navbar = () => {
   };
 
   return (
-    <div className={classes.container}>
-      <div className={classes.content}>
-        <Link href="/" className={classes.logo}>Food.</Link>
+    <>
+      <div className={classes.container}>
+        <div className={classes.content}>
+          <Link href="/" className={classes.logo}>Food.</Link>
 
-        <div className={classes.links}>
-          {ROUTES.map((route) => (
-            <Link
-              key={route.id}
-              href={route.path}
-              className={route.path === pathname ? classes.linkSelected : undefined}
-            >
-              {route.name}
-            </Link>
-          ))}
+          <div className={classes.links}>
+            {ROUTES.map((route) => (
+              <Link
+                key={route.id}
+                href={route.path}
+                className={route.path === pathname ? classes.linkSelected : undefined}
+              >
+                {route.name}
+              </Link>
+            ))}
+          </div>
+
+          <Image
+            className={classes.mOpenNav}
+            src="assets/menu.svg"
+            width={30}
+            height={30}
+            alt="navigation menu"
+            onClick={() => setIsDrawerOpen(true)}
+          />
         </div>
 
-        <Image
-          className={classes.mOpenNav}
-          src="assets/menu.svg"
-          width={30}
-          height={30}
-          alt="navigation menu"
-          onClick={() => setIsDrawerOpen(true)}
-        />
       </div>
-
       {isDrawerOpen && <NavigationDrawer onClose={closeDrawer} />}
-    </div>
+    </>
   );
 };
 

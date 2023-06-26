@@ -20,7 +20,7 @@ const FoodCard = ({
   return (
     <div className={classes.container}>
       {/* TODO: Change bellow with image later */}
-      <div className="bg-green-400 w-full h-36" />
+      <div className="bg-gray-300 w-full h-36" />
 
       <div className={classes.content}>
         <h3 className={classes.title}>{title}</h3>

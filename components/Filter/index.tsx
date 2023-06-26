@@ -5,6 +5,7 @@ import SelectBox from "./SelectBox";
 import { useState } from "react";
 import MobileFilter from "./MobileFilter";
 import { categoryOptions, starOptions } from "./constants";
+import classes from "./classes";
 
 const Filter = () => {
   const [category, setCategory] = useState("");
@@ -12,43 +13,44 @@ const Filter = () => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
   return (
-    <div className="flex gap-2">
-      <input
-        className="px-2 py-1 text-sm rounded-md flex-1 h-8"
-        placeholder="Search foods..."
-      />
-
-      <SelectBox
-        className="hidden sm:block"
-        onSelect={setCategory}
-        value={category}
-        options={categoryOptions}
-        placeholder="Category"
-      />
-
-      <SelectBox
-        className="hidden sm:block w-36"
-        onSelect={setStar}
-        value={star}
-        options={starOptions}
-        placeholder="Rating"
-      />
-
-      <button className="bg-white px-2 py-1 rounded-md h-8 sm:hidden">
-        <Image
-          onClick={() => setIsDrawerOpen(true)}
-          src="assets/filter.svg"
-          width={20}
-          height={20}
-          alt="more filter"
+    <>
+      <div className="flex gap-2">
+        <input
+          className={classes.inputText}
+          placeholder="Search foods..."
         />
-      </button>
 
-      <button className="bg-orange-600 text-white px-2 py-1 rounded-md text-sm h-8">Search</button>
+        <SelectBox
+          className="hidden sm:block"
+          onSelect={setCategory}
+          value={category}
+          options={categoryOptions}
+          placeholder="Category"
+        />
 
+        <SelectBox
+          className="hidden sm:block w-36"
+          onSelect={setStar}
+          value={star}
+          options={starOptions}
+          placeholder="Rating"
+        />
+
+        <button className={classes.openFilterBtn}>
+          <Image
+            onClick={() => setIsDrawerOpen(true)}
+            src="assets/filter.svg"
+            width={20}
+            height={20}
+            alt="more filter"
+          />
+        </button>
+
+        <button className={classes.searchBtn}>Search</button>
+      </div>
 
       {isDrawerOpen && <MobileFilter onClose={() => setIsDrawerOpen(false)} />}
-    </div>
+    </>
   );
 };
 
