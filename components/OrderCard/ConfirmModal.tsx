@@ -14,7 +14,7 @@ const ConfirmModal = ({
       <div className={classes.modalContainer}>
         <p className="text-center">Decrement amount to 0 will remove this food from your cart</p>
 
-        <div className="flex gap-5 items-center justify-center">
+        <div className={classes.confirmActions}>
           <button
             onClick={onClose}
             className={classes.cancelBtn}
@@ -30,7 +30,7 @@ const ConfirmModal = ({
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default ConfirmModal
+export default ConfirmModal;

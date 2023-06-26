@@ -10,6 +10,6 @@ const classes = {
   // mobile only
   mOpenNav: "sm:hidden",
   mLinks: "relative top-14 flex gap-4 flex-col",
-}
+};
 
 export default classes;

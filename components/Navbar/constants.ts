@@ -15,4 +15,4 @@ export const ROUTES = [
     name: 'History',
     path: '/history',
   },
-]
+];

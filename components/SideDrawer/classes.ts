@@ -12,6 +12,6 @@ const classes = {
   mOpenNav: "sm:hidden",
   mDrawerContainer: "w-56 h-full bg-white fixed right-0 px-5",
   mCloseNav: "fixed top-4 right-4 z-30",
-}
+};
 
 export default classes;

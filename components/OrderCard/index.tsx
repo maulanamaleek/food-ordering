@@ -1,11 +1,13 @@
-'use client'
+'use client';
 
-import Image from "next/image"
-import { useEffect, useState } from "react"
+import Image from "next/image";
+import { useEffect, useState } from "react";
+import dayjs from 'dayjs';
 
 import { formatCurrency, truncateChar } from "@/utils";
 import ConfirmModal from "./ConfirmModal";
 import classes from "./classes";
+import useDetectMobileScreen from "@/hooks/useDetectMobileScreen";
 
 const DEFAULT_AMOUNT = 1;
 
@@ -20,40 +22,71 @@ interface ICartItemProps {
   name: string;
   description: string;
   imageUrl: string;
+  viewOnly?: boolean;
+  orderedAt?: number;
 }
 
-const CartItem = ({
+const OrderCard = ({
   price,
   amount,
   name,
   description,
   imageUrl,
+  orderedAt,
+  viewOnly = false,
 }: ICartItemProps) => {
   const [itemNum, setItemNum] = useState(DEFAULT_AMOUNT);
   const [isShowModal, setIsShowModal] = useState(false);
-  // TODO: create hooks for better screen detector
-  const isMobile = window.innerWidth <= 400;
+  const isMobile = useDetectMobileScreen();
 
   const nameTruncateAmount = isMobile ? MOBILE_MAX_FOOD_NAME : DESKTOP_MAX_FOOD_NAME;
   const descTruncateAmount = isMobile ? MOBILE_MAX_DESC : DESKTOP_MAX_DESC;
 
   useEffect(() => {
     setItemNum(amount);
-  }, [amount])
+  }, [amount]);
 
   const addAmount = () => {
     setItemNum((prev) => prev + 1);
-  }
+  };
 
   const decreaseAmount = () => {
-    // TODO: add confirmation dialog, when amount is 1. confirm to user to remove item from cart;
     if (itemNum === DEFAULT_AMOUNT) {
-      setIsShowModal(true)
+      // TODO: when user confirm, remove specific item from cart
+      setIsShowModal(true);
       return;
     };
 
     setItemNum((prev) => prev - 1);
-  }
+  };
+
+  const actionsElem = (() => {
+    const elems: JSX.Element[] = [];
+
+    if (viewOnly) {
+      if (!!orderedAt) {
+        elems.push(
+          <span key="ordered-at" className="text-xs text-gray-400">
+            {dayjs(orderedAt).format('DD-MM-YYYY').toString()}
+          </span>
+        );
+      }
+
+      elems.push(
+        <span key="item-amount">x{itemNum}</span>
+      );
+    } else {
+      elems.push(
+        <div key="order-adjust-amount" className="flex gap-3">
+          <button onClick={decreaseAmount} className={classes.orderAdjustNum}>-</button>
+          <span>{itemNum}</span>
+          <button onClick={addAmount} className={classes.orderAdjustNum}>+</button>
+        </div>
+      );
+    }
+
+    return elems;
+  })();
 
   return (
     <div className={classes.container}>
@@ -61,6 +94,7 @@ const CartItem = ({
         <Image
           className="object-cover"
           fill
+          sizes="80px"
           src={imageUrl}
           alt={name}
         />
@@ -72,11 +106,7 @@ const CartItem = ({
       </div>
 
       <div className={classes.actions}>
-        <div className="flex gap-3">
-          <button onClick={decreaseAmount} className="px-2 bg-slate-200 rounded-md">-</button>
-          <span>{itemNum}</span>
-          <button onClick={addAmount} className="px-2 bg-slate-200 rounded-md">+</button>
-        </div>
+        {actionsElem}
 
         <span className={classes.totalPrice}>
           {formatCurrency(itemNum * price, 'IDR')}
@@ -90,7 +120,7 @@ const CartItem = ({
         />
       )}
     </div>
-  )
-}
+  );
+};
 
-export default CartItem
+export default OrderCard;

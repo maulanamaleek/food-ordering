@@ -30,7 +30,7 @@ const dummyFoods = [
     amount_purchased: 5,
     rating: 3.8,
   },
-]
+];
 
 export default function Home() {
   return (
@@ -50,5 +50,5 @@ export default function Home() {
         ))}
       </div>
     </main>
-  )
+  );
 }

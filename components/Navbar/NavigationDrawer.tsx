@@ -29,7 +29,7 @@ const NavigationDrawer = ({
         ))}
       </div>
     </SideDrawer>
-  )
-}
+  );
+};
 
 export default NavigationDrawer;

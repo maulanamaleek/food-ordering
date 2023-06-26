@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import Image from "next/image";
 import SelectBox from "./SelectBox";
@@ -8,7 +8,7 @@ import { categoryOptions, starOptions } from "./constants";
 
 const Filter = () => {
   const [category, setCategory] = useState("");
-  const [star, setStar] = useState("")
+  const [star, setStar] = useState("");
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
   return (
@@ -49,7 +49,7 @@ const Filter = () => {
 
       {isDrawerOpen && <MobileFilter onClose={() => setIsDrawerOpen(false)} />}
     </div>
-  )
-}
+  );
+};
 
 export default Filter;

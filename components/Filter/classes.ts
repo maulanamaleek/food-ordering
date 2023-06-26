@@ -11,7 +11,7 @@ const classes = {
 
   applyFilterContainer: "fixed bottom-0 h-16 bg-white z-20 w-56 right-0 flex items-center px-5",
   applyFilterBtn: "bg-orange-600 font-semibold text-white text-sm py-2 rounded-md w-full",
-}
+};
 
 /* eslint-enable max-len */
 

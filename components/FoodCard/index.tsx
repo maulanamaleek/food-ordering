@@ -43,7 +43,7 @@ const FoodCard = ({
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default FoodCard;

@@ -1,4 +1,4 @@
-import CartItem from "@/components/CartItem";
+import OrderCard from "@/components/OrderCard";
 
 const dummyCarts = [
   {
@@ -33,7 +33,7 @@ const dummyCarts = [
     description: 'Food description with variant available, more description for long content. lorem ipsum dolor sit amet, lorem ipsum dolor sit amet',
     imageUrl: "https://img.delicious.com.au/1DhZnhaT/del/2022/08/parmesan-crumbed-chicken-schnitzel-fried-eggs-and-apple-cabbage-slaw-173352-2.jpg",
   },
-]
+];
 
 const Cart = () => {
   return (
@@ -42,18 +42,18 @@ const Cart = () => {
 
       <div className="mt-10 px-5 flex flex-col gap-4">
         {dummyCarts.map((cartItem) => (
-          <CartItem
+          <OrderCard
+            key={cartItem.id}
             name={cartItem.name}
             price={cartItem.price}
             description={cartItem.description}
-            key={cartItem.id}
             amount={cartItem.amount}
             imageUrl={cartItem.imageUrl}
           />
         ))}
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default Cart;

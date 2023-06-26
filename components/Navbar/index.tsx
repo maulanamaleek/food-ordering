@@ -1,4 +1,4 @@
-'use client'
+'use client';
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from 'next/navigation';
@@ -14,7 +14,7 @@ const Navbar = () => {
 
   const closeDrawer = () => {
     setIsDrawerOpen(false);
-  }
+  };
 
   return (
     <div className={classes.container}>
@@ -45,7 +45,7 @@ const Navbar = () => {
 
       {isDrawerOpen && <NavigationDrawer onClose={closeDrawer} />}
     </div>
-  )
-}
+  );
+};
 
 export default Navbar;

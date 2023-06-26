@@ -22,20 +22,20 @@ const SelectBox = ({
 }: ISelectBoxProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const optionRef = useRef<HTMLDivElement | null>(null);
-  useClickOutside(optionRef, () => setIsOpen(false))
+  useClickOutside(optionRef, () => setIsOpen(false));
 
   const handleSelect = (value: string) => {
     onSelect(value);
     setIsOpen(false);
-  }
+  };
 
   const placeholderElem = (() => {
     if (value) {
-      return <span className={classes.selectValue}>{value}</span>
+      return <span className={classes.selectValue}>{value}</span>;
     }
 
-    return <span className="select-none text-gray-500 text-sm">{placeholder}</span>
-  })()
+    return <span className="select-none text-gray-500 text-sm">{placeholder}</span>;
+  })();
 
   return (
     <div ref={optionRef} className={className}>
@@ -68,7 +68,7 @@ const SelectBox = ({
       )}
 
     </div>
-  )
-}
+  );
+};
 
 export default SelectBox;

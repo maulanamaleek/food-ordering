@@ -25,7 +25,7 @@ const SideDrawer = ({
         {children}
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default SideDrawer;

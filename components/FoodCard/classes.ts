@@ -7,7 +7,7 @@ const classes = {
   price: "font-semibold text-sm",
   title: "truncate text-base",
   content: "p-2 flex flex-col",
-}
+};
 
 /* eslint-enable max-len */
 

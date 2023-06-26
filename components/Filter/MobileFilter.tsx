@@ -1,4 +1,4 @@
-'use client'
+'use client';
 import { useState } from "react";
 import SideDrawer from "../SideDrawer";
 import SelectBox from "./SelectBox";
@@ -13,7 +13,7 @@ const MobileFilter = ({
   onClose,
 }: IMobileFilterProps) => {
   const [category, setCategory] = useState("All");
-  const [star, setStar] = useState("All")
+  const [star, setStar] = useState("All");
 
   return (
     <SideDrawer onClose={onClose}>
@@ -39,7 +39,7 @@ const MobileFilter = ({
         <button onClick={onClose} className={classes.applyFilterBtn}>Apply Filter</button>
       </div>
     </SideDrawer>
-  )
-}
+  );
+};
 
 export default MobileFilter;
