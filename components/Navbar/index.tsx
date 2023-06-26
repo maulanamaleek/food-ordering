@@ -1,13 +1,16 @@
 'use client'
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from 'next/navigation';
 import { useState } from "react";
 
 import NavigationDrawer from "./NavigationDrawer";
 import classes from "./classes";
+import { ROUTES } from "./constants";
 
 const Navbar = () => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const pathname = usePathname();
 
   const closeDrawer = () => {
     setIsDrawerOpen(false);
@@ -16,11 +19,18 @@ const Navbar = () => {
   return (
     <div className={classes.container}>
       <div className={classes.content}>
-        <h1 className={classes.logo}>Food.</h1>
+        <Link href="/" className={classes.logo}>Food.</Link>
 
         <div className={classes.links}>
-          <Link href="/" className={classes.linkSelected}>Discover</Link>
-          <Link href="/">Cart</Link>
+          {ROUTES.map((route) => (
+            <Link
+              key={route.id}
+              href={route.path}
+              className={route.path === pathname ? classes.linkSelected : undefined}
+            >
+              {route.name}
+            </Link>
+          ))}
         </div>
 
         <Image

@@ -19,7 +19,6 @@
     "no-var": "error",
     "no-useless-return": "error",
     "@typescript-eslint/no-unused-vars": "error",
-    "no-magic-numbers": "error",
     "no-inline-comments": "warn",
     "space-before-blocks": "error",
     "comma-spacing": "error",
