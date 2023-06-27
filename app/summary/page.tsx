@@ -1,4 +1,5 @@
-import OrderCard from "@/components/OrderCard";
+import SummaryCard from "@/components/SummaryCard";
+
 
 const dummyCarts = [
   {
@@ -31,6 +32,15 @@ const dummyCarts = [
   {
     id: 4,
     name: 'Chicken Katsu Curry Ramen Super Long',
+    amount: 4,
+    price: 32000,
+    description: 'Food description with variant available, more description for long content. lorem ipsum dolor sit amet, lorem ipsum dolor sit amet',
+    imageUrl: "https://img.delicious.com.au/1DhZnhaT/del/2022/08/parmesan-crumbed-chicken-schnitzel-fried-eggs-and-apple-cabbage-slaw-173352-2.jpg",
+    orderedAt: Date.now(),
+  },
+  {
+    id: 5,
+    name: 'Chicken Katsu Curry Ramen Super Long',
     amount: 2,
     price: 32000,
     description: 'Food description with variant available, more description for long content. lorem ipsum dolor sit amet, lorem ipsum dolor sit amet',
@@ -39,27 +49,16 @@ const dummyCarts = [
   },
 ];
 
-const History = () => {
-  return (
-    <div className="pt-20 min-h-screen sm:w-3/4 lg:w-1/2 mx-auto">
-      <h1 className="text-center font-bold text-xl">History</h1>
+const totalPayment = dummyCarts.reduce((acc, curr) => acc + (curr.price * curr.amount), 0);
 
-      <div className="mt-5 px-5 flex flex-col gap-4">
-        {dummyCarts.map((cartItem) => (
-          <OrderCard
-            key={cartItem.id}
-            name={cartItem.name}
-            price={cartItem.price}
-            description={cartItem.description}
-            amount={cartItem.amount}
-            imageUrl={cartItem.imageUrl}
-            orderedAt={cartItem.orderedAt}
-            viewOnly
-          />
-        ))}
-      </div>
+const Summary = () => {
+  return (
+    <div className="pt-20 min-h-screen sm:w-3/4 lg:w-1/2 mx-auto pb-24">
+      <h1 className="text-center font-bold text-xl mb-5">Summary</h1>
+
+      <SummaryCard orders={dummyCarts} total={totalPayment} />
     </div>
   );
 };
 
-export default History;
+export default Summary;
