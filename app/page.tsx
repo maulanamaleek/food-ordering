@@ -38,7 +38,7 @@ export default function Home() {
       <Filter />
 
       <h1 className="font-bold text-lg">Discover the best foods &rarr;</h1>
-      <div className="flex flex-wrap w-full justify-between sm:justify-center gap-x-2 gap-y-5">
+      <div className="flex flex-wrap w-full justify-between sm:justify-center gap-x-2 gap-y-5 lg:justify-start lg:gap-x-5">
         {dummyFoods.map((food) => (
           <FoodCard
             key={food.id}

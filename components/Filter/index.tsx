@@ -21,7 +21,7 @@ const Filter = () => {
         />
 
         <SelectBox
-          className="hidden sm:block"
+          className="hidden sm:block w-32"
           onSelect={setCategory}
           value={category}
           options={categoryOptions}
