@@ -5,9 +5,9 @@ import { useEffect, useState } from "react";
 import dayjs from 'dayjs';
 
 import { formatCurrency, truncateChar } from "@/utils";
-import ConfirmModal from "./ConfirmModal";
 import classes from "./classes";
 import useDetectMobileScreen from "@/hooks/useDetectMobileScreen";
+import ConfirmModal from "../ConfirmModal";
 
 const DEFAULT_AMOUNT = 1;
 
@@ -116,6 +116,8 @@ const OrderCard = ({
       {isShowModal && (
         <ConfirmModal
           onClose={() => setIsShowModal(false)}
+          confirmText="Remove"
+          description="Decrement amount to 0 will remove this food from your cart"
           onConfirm={() => setIsShowModal(false)}
         />
       )}

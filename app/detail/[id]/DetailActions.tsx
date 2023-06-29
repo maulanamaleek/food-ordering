@@ -2,8 +2,14 @@
 import { formatCurrency } from '@/utils';
 import Link from 'next/link';
 import React, { useState } from 'react';
-const PRICE = 41_000;
-const DetailActions = () => {
+
+interface IDetailActionsProps {
+  price: number;
+}
+
+const DetailActions = ({
+  price,
+}: IDetailActionsProps) => {
   const [num, setNum] = useState(1);
 
   const addAmount = () => {
@@ -20,7 +26,7 @@ const DetailActions = () => {
   return (
     <>
       <div className="mt-5 flex justify-between">
-        <span className="font-semibold text-orange-600">{formatCurrency(PRICE * num, 'IDR')}</span>
+        <span className="font-semibold text-orange-600">{formatCurrency(price * num, 'IDR')}</span>
 
         <div className="flex gap-2">
           <button className="px-2 bg-slate-200 rounded-md" onClick={decreaseAmount}>-</button>

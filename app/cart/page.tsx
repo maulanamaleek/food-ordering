@@ -1,6 +1,7 @@
 import OrderCard from "@/components/OrderCard";
 import Link from "next/link";
 
+// TODO: use state and local storage persist for cart data
 const dummyCarts = [
   {
     id: 1,

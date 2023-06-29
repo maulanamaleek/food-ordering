@@ -1,31 +1,37 @@
 import classes from "./classes";
 
-interface IConfirmModal {
+interface IConfirmModalProps {
+  cancelText?: string;
+  confirmText?: string;
+  description: string;
   onClose: () => void;
   onConfirm: () => void;
 }
 
 const ConfirmModal = ({
+  confirmText = 'Confirm',
+  cancelText = 'Cancel',
+  description,
   onClose,
   onConfirm,
-}: IConfirmModal) => {
+}: IConfirmModalProps) => {
   return (
     <div className={classes.overlay}>
       <div className={classes.modalContainer}>
-        <p className="text-center">Decrement amount to 0 will remove this food from your cart</p>
+        <p className="text-center">{description}</p>
 
         <div className={classes.confirmActions}>
           <button
             onClick={onClose}
             className={classes.cancelBtn}
           >
-            Cancel
+            {cancelText}
           </button>
           <button
             onClick={onConfirm}
             className={classes.confirmBtn}
           >
-            Remove
+            {confirmText}
           </button>
         </div>
       </div>

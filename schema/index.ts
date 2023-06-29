@@ -9,3 +9,26 @@ export interface IOrder {
   name: string;
   price: number;
 }
+
+export enum E_FOOD_CATEGORY {
+  DRINKS = 'drinks',
+  NOODLES = 'noodles',
+  CAKE = 'cake',
+  CHICKEN = 'chicken',
+  BEEF = 'beef',
+  FRIES = 'fries',
+  SOUP = 'soup',
+  SUSHI = 'sushi',
+}
+
+export interface IFood {
+  id: number;
+  price: number;
+  is_available: boolean;
+  name: string;
+  description: string;
+  imageUrl: string;
+  avg_rating: number;
+  ordered_amount: number;
+  category: E_FOOD_CATEGORY[];
+}
