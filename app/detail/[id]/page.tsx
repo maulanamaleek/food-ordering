@@ -4,6 +4,8 @@ import { IFood } from "@/schema";
 import { IResponse } from "@/schema/api";
 import { API_URL } from "@/constants/api";
 
+// TODO: implement dynamic metadata
+
 interface IDetailPageProps {
   params: {
     id: string;

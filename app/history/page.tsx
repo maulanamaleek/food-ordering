@@ -1,4 +1,5 @@
 import OrderCard from "@/components/OrderCard";
+import { Metadata } from "next";
 
 const dummyCarts = [
   {
@@ -38,6 +39,11 @@ const dummyCarts = [
     orderedAt: Date.now(),
   },
 ];
+
+export const metadata: Metadata = {
+  title: 'Order History - Food Ordering App',
+  description: 'History of order from our app',
+};
 
 const History = () => {
   return (

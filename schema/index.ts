@@ -34,8 +34,11 @@ export interface IFood {
   category: E_FOOD_CATEGORY[];
 }
 
-export interface IFoodFilter<T = string> {
-  id: number;
+export interface IFoodFilterState {
   displayName: string;
-  value: T;
+  value: string;
+}
+
+export interface IFoodFilter extends IFoodFilterState {
+  id: number;
 }

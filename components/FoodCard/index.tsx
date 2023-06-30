@@ -58,7 +58,7 @@ const FoodCard = ({
 
   if (!is_available) {
     return (
-      <div className="relative">
+      <div className="relative" title={data.name}>
         <Badge>No Stock</Badge>
         <div className={`${classes.container} grayscale`}>
           {cardElem}
@@ -69,7 +69,7 @@ const FoodCard = ({
 
   return (
     <Link href={`/detail/${data.id}`}>
-      <div className={classes.container}>
+      <div className={classes.container} title={data.name}>
         {cardElem}
       </div>
     </Link>

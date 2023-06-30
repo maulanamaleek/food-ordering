@@ -55,6 +55,7 @@ const dummyCarts = [
 
 const totalPayment = dummyCarts.reduce((acc, curr) => acc + (curr.price * curr.amount), 0);
 
+
 const Summary = () => {
   const [isSuccess, setIsSuccess] = useState(false);
 

@@ -22,7 +22,7 @@ const NavigationDrawer = ({
             key={route.id}
             href={route.path}
             onClick={onClose}
-            className={route.path === pathname ? classes.linkSelected : undefined}
+            className={classes.link(route.path === pathname)}
           >
             {route.name}
           </Link>

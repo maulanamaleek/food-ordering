@@ -5,7 +5,7 @@ const classes = {
   content: "w-full md:w-3/4 p-4 flex items-center justify-between mx-auto",
   links: "hidden sm:flex gap-5",
   logo: "font-bold text-xl xl:text-3xl cursor-pointer select-none",
-  linkSelected: "text-orange-600 font-semibold",
+  link: (selected: boolean) => `md:text-lg xl:text-2xl ${selected ? 'text-orange-600 font-semibold' : ''}`,
 
   // mobile only
   mOpenNav: "sm:hidden",

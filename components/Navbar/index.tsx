@@ -27,7 +27,7 @@ const Navbar = () => {
               <Link
                 key={route.id}
                 href={route.path}
-                className={route.path === pathname ? classes.linkSelected : undefined}
+                className={classes.link(route.path === pathname)}
               >
                 {route.name}
               </Link>

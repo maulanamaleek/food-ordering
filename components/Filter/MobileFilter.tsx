@@ -1,32 +1,31 @@
-'use client';
-import { useState } from "react";
 import SideDrawer from "../SideDrawer";
 import SelectBox from "./SelectBox";
 import classes from "./classes";
 import { CATEGORY_FILTER_VAL, RATING_FILTER } from "@/constants/filter";
+import { IFoodFilterState } from "@/schema";
 
 interface IMobileFilterProps {
   show: boolean;
+  category: IFoodFilterState;
+  rating: IFoodFilterState;
   onClose: () => void;
-  // onSearch: () => void;
+  onSubmit: Function;
+  setCategory: (val: IFoodFilterState) => void;
+  setRating: (val: IFoodFilterState) => void;
 }
 
 const MobileFilter = ({
+  category,
+  rating,
   show,
   onClose,
-  // onSearch,
+  onSubmit,
+  setCategory,
+  setRating,
 }: IMobileFilterProps) => {
-  const [category, setCategory] = useState({
-    displayName: 'All',
-    value: 'all',
-  });
-  const [star, setStar] = useState({
-    displayName: 'All',
-    value: 'all',
-  });
 
   const handleSubmit = () => {
-    // onSearch();
+    onSubmit();
     onClose();
   };
 
@@ -48,9 +47,9 @@ const MobileFilter = ({
 
         <SelectBox
           options={RATING_FILTER}
-          value={star.value}
-          onSelect={setStar}
-          placeholder={star.displayName}
+          value={rating.value}
+          onSelect={setRating}
+          placeholder={rating.displayName}
           label="Rating"
         />
       </div>

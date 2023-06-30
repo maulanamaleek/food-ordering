@@ -1,12 +1,18 @@
 'use client';
 
-import Image from "next/image";
-import SelectBox from "./SelectBox";
 import { FormEventHandler, useEffect, useState } from "react";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
+
+import SelectBox from "./SelectBox";
 import MobileFilter from "./MobileFilter";
 import classes from "./classes";
-import { CATEGORY_FILTER_VAL, CATEGORY_PLACEHOLDER_MAP, RATING_FILTER, RATING_PLACEHOLDER_MAP } from "@/constants/filter";
-import { useRouter } from "next/navigation";
+import {
+  CATEGORY_FILTER_VAL,
+  CATEGORY_PLACEHOLDER_MAP,
+  RATING_FILTER,
+  RATING_PLACEHOLDER_MAP,
+} from "@/constants/filter";
 
 interface IFilterProps {
   search?: string;
@@ -46,12 +52,18 @@ const Filter = ({
   }, [propSearch, propCategory, propRating]);
 
   const onSubmit: FormEventHandler<HTMLFormElement> = (e) => {
-    e.preventDefault();
+    e?.preventDefault();
+
     // replace current url with search params
     const url = new URL(location.href);
     url.searchParams.set('category', category.value);
     url.searchParams.set('rating', rating.value);
-    url.searchParams.set('search', search);
+
+    if (!search) {
+      url.searchParams.delete('search');
+    } else {
+      url.searchParams.set('search', search);
+    }
     router.replace(url.href);
   };
 
@@ -93,12 +105,23 @@ const Filter = ({
           />
         </button>
 
-        <button type="submit" className={classes.searchBtn}>Search</button>
+        <button type="submit" className={classes.searchBtn}>Apply</button>
       </form>
 
+      <p
+        className="text-sm bg-orange-100 w-fit px-2 py-1 rounded-md"
+      >
+        🍕 Click <b>Apply</b> Button to implement search and filter(s)
+      </p>
+
       <MobileFilter
+        category={category}
+        rating={rating}
+        setCategory={setCategory}
+        setRating={setRating}
         show={isDrawerOpen}
         onClose={() => setIsDrawerOpen(false)}
+        onSubmit={onSubmit}
       />
     </>
   );

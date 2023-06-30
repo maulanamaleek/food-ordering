@@ -66,20 +66,20 @@ const OrderCard = ({
     if (viewOnly) {
       if (!!orderedAt) {
         elems.push(
-          <span key="ordered-at" className="text-xs text-gray-400">
+          <span key="ordered-at" className={classes.orderedAt}>
             {dayjs(orderedAt).format('DD-MM-YYYY').toString()}
           </span>
         );
       }
 
       elems.push(
-        <span key="item-amount">x{itemNum}</span>
+        <span key="item-amount" className={classes.amount}>x{itemNum}</span>
       );
     } else {
       elems.push(
         <div key="order-adjust-amount" className="flex gap-3">
           <button onClick={decreaseAmount} className={classes.orderAdjustNum}>-</button>
-          <span>{itemNum}</span>
+          <span className={classes.amount}>{itemNum}</span>
           <button onClick={addAmount} className={classes.orderAdjustNum}>+</button>
         </div>
       );
@@ -101,8 +101,14 @@ const OrderCard = ({
       </div>
 
       <div className="flex-1 py-1">
-        <h3 className="font-semibold text-sm">{truncateChar(name, nameTruncateAmount)}</h3>
-        <p className="text-xs text-gray-500">{truncateChar(description, descTruncateAmount)}</p>
+        <h3
+          className="font-semibold text-sm sm:text-base lg:text-lg xl:text-xl"
+        >
+          {truncateChar(name, nameTruncateAmount)}
+        </h3>
+        <p className="text-xs sm:text-sm text-gray-500 xl:text-lg">
+          {truncateChar(description, descTruncateAmount)}
+        </p>
       </div>
 
       <div className={classes.actions}>

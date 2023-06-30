@@ -13,6 +13,14 @@ interface IHomeProps {
   }
 }
 
+/* eslint-disable max-len */
+const classes = {
+  foodList: "flex flex-wrap w-full justify-between sm:justify-center gap-x-2 gap-y-5 lg:justify-start lg:gap-x-5 pb-10 xl:grid lg:grid-cols-5 xl:gap-y-8",
+  container: "flex min-h-screen flex-col px-4 gap-5 mx-auto sm:w-3/4 mt-24",
+  title: "font-bold text-lg",
+};
+/* eslint-enable max-len */
+
 const Home = async ({
   searchParams,
 }: IHomeProps) => {
@@ -49,16 +57,16 @@ const Home = async ({
   })();
 
   return (
-    <main className="flex min-h-screen flex-col px-4 gap-5 mx-auto sm:w-3/4 mt-24">
+    <main className={classes.container}>
       <Filter
         search={search}
         rating={rating}
         category={category}
       />
 
-      <h1 className="font-bold text-lg">Discover the best foods &rarr;</h1>
+      <h1 className={classes.title}>Discover the best foods &rarr;</h1>
       <div
-        className="flex flex-wrap w-full justify-between sm:justify-center gap-x-2 gap-y-5 lg:justify-start lg:gap-x-5 pb-10"
+        className={classes.foodList}
       >
         {foodList}
       </div>
