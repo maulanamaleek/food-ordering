@@ -1,7 +1,9 @@
 'use client';
 const Error = () => {
   return (
-    <div>There is Something wrong! Try Again Later</div>
+    <div className='w-screen h-screen flex items-center justify-center'>
+      There is Something Wrong, Try Again Later
+    </div>
   );
 };
 

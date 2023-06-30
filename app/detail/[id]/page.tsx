@@ -2,6 +2,7 @@ import Image from "next/image";
 import DetailActions from "./DetailActions";
 import { IFood } from "@/schema";
 import { IResponse } from "@/schema/api";
+import { API_URL } from "@/constants/api";
 
 interface IDetailPageProps {
   params: {
@@ -13,7 +14,7 @@ const DetailPage = async ({
   params,
 }: IDetailPageProps) => {
   // TODO: handle RESPONSE ERROR
-  const res = await fetch(`http://localhost:3000/api/food/${params.id}`);
+  const res = await fetch(`${API_URL.FOOD}/${params.id}`);
   const resData = await res.json() as IResponse<IFood>;
 
   // TODO: handle not found

@@ -1,5 +1,6 @@
 import Filter from "@/components/Filter";
 import FoodCard from "@/components/FoodCard";
+import { API_URL } from "@/constants/api";
 import { IFood } from "@/schema";
 import { IResponse } from "@/schema/api";
 
@@ -16,7 +17,7 @@ const Home = async ({
   searchParams,
 }: IHomeProps) => {
   const { category, rating, search } = searchParams;
-  const apiUrl = new URL('http://localhost:3000/api/foods');
+  const apiUrl = new URL(API_URL.FOODS);
   if (category) {
     apiUrl.searchParams.set('category', category);
   }
