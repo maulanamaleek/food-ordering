@@ -1,4 +1,5 @@
-import { mockFoods } from "@/constants/styles/mocks/foods";
+
+import { mockFoods } from "@/constants/mock";
 import { E_RESPONSE_CODE } from "@/schema/api";
 import { NextResponse } from "next/server";
 

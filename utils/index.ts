@@ -1,4 +1,4 @@
-import { TCurrency } from "@/schema";
+import { IFoodFilter, TCurrency } from "@/schema";
 
 type TCurrencyMap = Record<TCurrency, (amount: string) => string>;
 export const currencyMap: TCurrencyMap = {
@@ -16,4 +16,21 @@ export const truncateChar = (str: string, amount: number) => {
   }
 
   return str.slice(0, amount - 3) + '...';
+};
+
+
+/**
+ * construct object from FILTER LIST which result of:
+ * {
+ *  ...,
+ *  [value]: displayName
+ * }
+ */
+export const createPlaceholderMap = (arr: IFoodFilter[]): Record<string, string> => {
+  return arr.reduce((acc, curr) => {
+    return {
+      ...acc,
+      [curr.value]: curr.displayName,
+    };
+  }, {});
 };

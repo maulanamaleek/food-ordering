@@ -4,13 +4,15 @@ import Image from "next/image";
 import { useRef, useState } from "react";
 import classes from "./classes";
 import useClickOutside from "@/hooks/useClickOutside";
+import { IFoodFilter } from "@/schema";
 
 interface ISelectBoxProps {
   className?: string;
   placeholder?: string;
   value: string;
-  options: string[];
-  onSelect: (value: string) => void;
+  options: IFoodFilter[];
+  label: string;
+  onSelect: (value: { displayName: string, value: string }) => void;
 }
 
 const SelectBox = ({
@@ -18,20 +20,26 @@ const SelectBox = ({
   placeholder,
   value,
   options,
+  label,
   onSelect,
 }: ISelectBoxProps) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [displayName, setDisplayName] = useState('');
   const optionRef = useRef<HTMLDivElement | null>(null);
   useClickOutside(optionRef, () => setIsOpen(false));
 
-  const handleSelect = (value: string) => {
-    onSelect(value);
+  const handleSelect = (opt: IFoodFilter) => {
+    onSelect({
+      displayName: opt.displayName,
+      value: opt.value,
+    });
+    setDisplayName(opt.displayName);
     setIsOpen(false);
   };
 
   const placeholderElem = (() => {
-    if (value) {
-      return <span className={classes.selectValue}>{value}</span>;
+    if (displayName) {
+      return <span className={classes.selectValue}>{displayName}</span>;
     }
 
     return <span className="select-none text-gray-500 text-sm">{placeholder}</span>;
@@ -39,6 +47,7 @@ const SelectBox = ({
 
   return (
     <div ref={optionRef} className={className}>
+      <span className="font-semibold text-sm lg:text-base truncate w-full">{label}</span>
       <div
         className={classes.selectContent}
         onClick={() => setIsOpen((prev) => !prev)}
@@ -55,13 +64,13 @@ const SelectBox = ({
 
       {isOpen && (
         <ul className={classes.ulFloat}>
-          {options.map((i) => (
+          {options.map((option) => (
             <li
-              key={i}
-              className={classes.selectOption(value === i)}
-              onClick={() => handleSelect(i)}
+              key={option.id}
+              className={classes.selectOption(value === option.value)}
+              onClick={() => handleSelect(option)}
             >
-              {i}
+              {option.displayName}
             </li>
           ))}
         </ul>

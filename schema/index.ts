@@ -11,6 +11,7 @@ export interface IOrder {
 }
 
 export enum E_FOOD_CATEGORY {
+  ALL = 'all',
   DRINKS = 'drinks',
   NOODLES = 'noodles',
   CAKE = 'cake',
@@ -31,4 +32,10 @@ export interface IFood {
   avg_rating: number;
   ordered_amount: number;
   category: E_FOOD_CATEGORY[];
+}
+
+export interface IFoodFilter<T = string> {
+  id: number;
+  displayName: string;
+  value: T;
 }

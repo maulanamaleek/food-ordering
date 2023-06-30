@@ -3,10 +3,10 @@
 /* eslint-disable max-len */
 const classes = {
 
-  selectContent: "h-8 bg-white flex items-center px-2 rounded-md items-center gap-2 justify-between cursor-pointer",
+  selectContent: "h-8 bg-white flex items-center px-2 rounded-md capitalize gap-2 justify-between cursor-pointer border",
   selectValue: "select-none text-sm overflow-ellipsis overflow-hidden flex-1",
   selectOption: (selected: boolean) =>
-    `hover:text-orange-600 cursor-pointer select-none ${selected ? 'text-orange-600 font-semibold' : ''}`,
+    `hover:text-orange-600 cursor-pointer select-none capitalize ${selected ? 'text-orange-600 font-semibold' : ''}`,
   ulFloat: "bg-white px-2 py-1 rounded-md mt-2 absolute border z-10 w-full sm:w-auto",
   searchBtn: "bg-orange-600 text-white px-2 py-1 rounded-md text-sm h-8",
   openFilterBtn: "bg-white px-2 py-1 rounded-md h-8 sm:hidden",

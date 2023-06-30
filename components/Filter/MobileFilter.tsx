@@ -3,40 +3,60 @@ import { useState } from "react";
 import SideDrawer from "../SideDrawer";
 import SelectBox from "./SelectBox";
 import classes from "./classes";
-import { categoryOptions, starOptions } from "./constants";
+import { CATEGORY_FILTER_VAL, RATING_FILTER } from "@/constants/filter";
 
 interface IMobileFilterProps {
+  show: boolean;
   onClose: () => void;
+  // onSearch: () => void;
 }
 
 const MobileFilter = ({
+  show,
   onClose,
+  // onSearch,
 }: IMobileFilterProps) => {
-  const [category, setCategory] = useState("All");
-  const [star, setStar] = useState("All");
+  const [category, setCategory] = useState({
+    displayName: 'All',
+    value: 'all',
+  });
+  const [star, setStar] = useState({
+    displayName: 'All',
+    value: 'all',
+  });
+
+  const handleSubmit = () => {
+    // onSearch();
+    onClose();
+  };
+
+  if (!show) {
+    return null;
+  }
 
   return (
     <SideDrawer onClose={onClose}>
       <div className="relative top-14">
-        <h3 className="font-semibold mb-1">Category</h3>
         <SelectBox
-          options={categoryOptions}
-          value={category}
+          options={CATEGORY_FILTER_VAL}
+          value={category.value}
           onSelect={setCategory}
-          className="border rounded-md"
+          placeholder={category.displayName}
+          className="mb-5"
+          label="Category"
         />
 
-        <h3 className="font-semibold mb-1 mt-5">Rating</h3>
         <SelectBox
-          options={starOptions}
-          value={star}
+          options={RATING_FILTER}
+          value={star.value}
           onSelect={setStar}
-          className="border rounded-md"
+          placeholder={star.displayName}
+          label="Rating"
         />
       </div>
 
       <div className={classes.applyFilterContainer}>
-        <button onClick={onClose} className={classes.applyFilterBtn}>Apply Filter</button>
+        <button onClick={handleSubmit} className={classes.applyFilterBtn}>Apply Filter</button>
       </div>
     </SideDrawer>
   );
