@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
 
@@ -14,6 +15,12 @@ const classes = {
 const NotFoundPage = () => {
   return (
     <div className={classes.container}>
+      <Image
+        src="/assets/food-1.png"
+        width={220}
+        height={220}
+        alt="food"
+      />
       <h1 className={classes.title}>404</h1>
       <h1 className={classes.subTitle}>Content is Not Found</h1>
       <p className={classes.description}>

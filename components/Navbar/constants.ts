@@ -1,18 +1,19 @@
 
+export const ROUTE_MAP = {
+  DISCOVER: '/',
+  HISTORY: '/history',
+  CART: '/cart',
+};
+
 export const ROUTES = [
   {
     id: 1,
     name: 'Discover',
-    path: '/',
+    path: ROUTE_MAP.DISCOVER,
   },
   {
     id: 2,
-    name: 'Cart',
-    path: '/cart',
-  },
-  {
-    id: 3,
     name: 'History',
-    path: '/history',
+    path: ROUTE_MAP.HISTORY,
   },
 ];
