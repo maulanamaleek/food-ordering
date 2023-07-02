@@ -18,6 +18,8 @@ const classes = {
 };
 /* eslint-enable max-len */
 
+export const dynamic = 'force-dynamic';
+
 const Cart = async () => {
   const res = await fetch(API_URL.CART);
   const resData = await res.json() as IResponse<ICartResponse>;

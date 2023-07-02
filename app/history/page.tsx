@@ -10,6 +10,8 @@ export const metadata: Metadata = {
   description: 'History of order from our app',
 };
 
+export const dynamic = 'force-dynamic';
+
 const History = async () => {
   const res = await fetch(API_URL.HISTORY);
   const resData = await res.json() as IResponse<IHistory[]>;
