@@ -55,3 +55,11 @@ export interface ICartResponse {
 export interface IHistory extends ICartData {
   ordered_date: number;
 }
+
+export interface IUser {
+  id: number;
+  name: string;
+  email: string;
+  avatar_url: string;
+  cart_items: number;
+}
