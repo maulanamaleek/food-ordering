@@ -1,50 +1,10 @@
-import OrderCard from "@/components/OrderCard";
 import Image from "next/image";
 import Link from "next/link";
 
-// TODO: use state and local storage persist for cart data
-const dummyCarts = [
-  {
-    id: 1,
-    name: 'Food Name',
-    amount: 2,
-    price: 32000,
-    description: 'Food description with variant available, more description for long content',
-    imageUrl: "https://img.delicious.com.au/1DhZnhaT/del/2022/08/parmesan-crumbed-chicken-schnitzel-fried-eggs-and-apple-cabbage-slaw-173352-2.jpg",
-  },
-  {
-    id: 2,
-    name: 'Spicy Meatball',
-    amount: 2,
-    price: 32000,
-    description: 'Food description with variant available, more description for long content',
-    imageUrl: "https://img.delicious.com.au/1DhZnhaT/del/2022/08/parmesan-crumbed-chicken-schnitzel-fried-eggs-and-apple-cabbage-slaw-173352-2.jpg",
-  },
-  {
-    id: 3,
-    name: 'Margaritha Pizza',
-    amount: 2,
-    price: 32000,
-    description: 'Food description with variant available, more description for long content',
-    imageUrl: "https://img.delicious.com.au/1DhZnhaT/del/2022/08/parmesan-crumbed-chicken-schnitzel-fried-eggs-and-apple-cabbage-slaw-173352-2.jpg",
-  },
-  {
-    id: 4,
-    name: 'Chicken Katsu Curry Ramen Super Long',
-    amount: 2,
-    price: 32000,
-    description: 'Food description with variant available, more description for long content. lorem ipsum dolor sit amet, lorem ipsum dolor sit amet',
-    imageUrl: "https://img.delicious.com.au/1DhZnhaT/del/2022/08/parmesan-crumbed-chicken-schnitzel-fried-eggs-and-apple-cabbage-slaw-173352-2.jpg",
-  },
-  {
-    id: 5,
-    name: 'Chicken Katsu Curry Ramen Super Long',
-    amount: 2,
-    price: 32000,
-    description: 'Food description with variant available, more description for long content. lorem ipsum dolor sit amet, lorem ipsum dolor sit amet',
-    imageUrl: "https://img.delicious.com.au/1DhZnhaT/del/2022/08/parmesan-crumbed-chicken-schnitzel-fried-eggs-and-apple-cabbage-slaw-173352-2.jpg",
-  },
-];
+import OrderCard from "@/components/OrderCard";
+import { API_URL } from "@/constants/api";
+import { ICartResponse } from "@/schema";
+import { IResponse } from "@/schema/api";
 
 /* eslint-disable max-len */
 const classes = {
@@ -58,10 +18,14 @@ const classes = {
 };
 /* eslint-enable max-len */
 
-const Cart = () => {
+const Cart = async () => {
+  const res = await fetch(API_URL.CART);
+  const resData = await res.json() as IResponse<ICartResponse>;
+  const cart = resData.data.items;
+
 
   const orderListElem = (() => {
-    if (!dummyCarts?.length) {
+    if (!cart?.length) {
       return (
         <div className={classes.noCartContainer}>
           <Image
@@ -79,7 +43,7 @@ const Cart = () => {
       );
     }
 
-    return dummyCarts.map((cartItem) => (
+    return cart.map((cartItem) => (
       <OrderCard
         key={cartItem.id}
         name={cartItem.name}
@@ -99,7 +63,7 @@ const Cart = () => {
         {orderListElem}
       </div>
 
-      {dummyCarts.length ? (
+      {cart.length ? (
         <Link href="/summary">
           <button
             className={classes.buttonSummary}>

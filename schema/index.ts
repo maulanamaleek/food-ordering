@@ -42,3 +42,16 @@ export interface IFoodFilterState {
 export interface IFoodFilter extends IFoodFilterState {
   id: number;
 }
+
+export interface ICartData extends IFood {
+  amount: number;
+}
+
+export interface ICartResponse {
+  total_items: number;
+  items: ICartData[];
+}
+
+export interface IHistory extends ICartData {
+  ordered_date: number;
+}

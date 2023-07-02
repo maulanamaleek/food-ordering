@@ -5,7 +5,14 @@
   ],
   "rules": {
     "no-nested-ternary": "error",
-    "no-console": "error",
+    "no-console": [
+      "error",
+      {
+        "allow": [
+          "error"
+        ]
+      }
+    ],
     "yoda": "warn",
     "max-len": [
       "warn",

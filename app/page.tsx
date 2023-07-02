@@ -44,7 +44,7 @@ const Home = async ({
   const foodList = (() => {
     if (!resData.data.length) {
       return (
-        <h1>No food found, please change your filter</h1>
+        <h1>Food is not found, please change your filter</h1>
       );
     }
     return resData.data.map((food) => (

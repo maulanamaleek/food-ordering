@@ -1,4 +1,10 @@
-import { E_FOOD_CATEGORY, IFood } from "@/schema";
+import {
+  E_FOOD_CATEGORY,
+  ICartResponse,
+  IFood,
+  IHistory,
+  IUser,
+} from "@/schema";
 
 /* eslint-disable max-len */
 export const mockFoods: IFood[] = [
@@ -91,3 +97,108 @@ export const mockFoods: IFood[] = [
     ordered_amount: 135,
   },
 ];
+
+export const mockCart: ICartResponse = {
+  total_items: 3,
+  items: [
+    {
+      id: 4,
+      name: 'Red Velvet Cake',
+      description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea ipsam doloremque deleniti quo earum nihil veniam laboriosam adipisci dicta? Earum voluptatum amet minus temporibus sunt dignissimos eaque eius facere repellat.',
+      price: 21000,
+      avg_rating: 4.2,
+      category: [E_FOOD_CATEGORY.CAKE],
+      imageUrl: 'https://img.delicious.com.au/1DhZnhaT/del/2022/08/parmesan-crumbed-chicken-schnitzel-fried-eggs-and-apple-cabbage-slaw-173352-2.jpg',
+      is_available: true,
+      ordered_amount: 23,
+      amount: 1,
+    },
+    {
+      id: 5,
+      name: 'Mixed Vegetable Smoothie',
+      description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea ipsam doloremque deleniti quo earum nihil veniam laboriosam adipisci dicta? Earum voluptatum amet minus temporibus sunt dignissimos eaque eius facere repellat.',
+      price: 24000,
+      avg_rating: 4.9,
+      category: [E_FOOD_CATEGORY.DRINKS],
+      imageUrl: 'https://img.delicious.com.au/1DhZnhaT/del/2022/08/parmesan-crumbed-chicken-schnitzel-fried-eggs-and-apple-cabbage-slaw-173352-2.jpg',
+      is_available: true,
+      ordered_amount: 6,
+      amount: 1,
+    },
+    {
+      id: 6,
+      name: 'Fried Chicken + Rice',
+      description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea ipsam doloremque deleniti quo earum nihil veniam laboriosam adipisci dicta? Earum voluptatum amet minus temporibus sunt dignissimos eaque eius facere repellat.',
+      price: 15000,
+      avg_rating: 4.9,
+      category: [E_FOOD_CATEGORY.CHICKEN],
+      imageUrl: 'https://img.delicious.com.au/1DhZnhaT/del/2022/08/parmesan-crumbed-chicken-schnitzel-fried-eggs-and-apple-cabbage-slaw-173352-2.jpg',
+      is_available: true,
+      ordered_amount: 211,
+      amount: 2,
+    },
+  ],
+};
+
+export const mockHistory: IHistory[] = [
+  {
+    id: 3,
+    name: 'Beef Teriyaki',
+    description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea ipsam doloremque deleniti quo earum nihil veniam laboriosam adipisci dicta? Earum voluptatum amet minus temporibus sunt dignissimos eaque eius facere repellat.',
+    price: 44000,
+    amount: 1,
+    avg_rating: 4.6,
+    category: [E_FOOD_CATEGORY.BEEF],
+    imageUrl: 'https://img.delicious.com.au/1DhZnhaT/del/2022/08/parmesan-crumbed-chicken-schnitzel-fried-eggs-and-apple-cabbage-slaw-173352-2.jpg',
+    is_available: true,
+    ordered_amount: 23,
+    ordered_date: new Date().getTime(),
+  },
+  {
+    id: 6,
+    name: 'Fried Chicken + Rice',
+    description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea ipsam doloremque deleniti quo earum nihil veniam laboriosam adipisci dicta? Earum voluptatum amet minus temporibus sunt dignissimos eaque eius facere repellat.',
+    price: 15000,
+    amount: 3,
+    avg_rating: 4.9,
+    category: [E_FOOD_CATEGORY.CHICKEN],
+    imageUrl: 'https://img.delicious.com.au/1DhZnhaT/del/2022/08/parmesan-crumbed-chicken-schnitzel-fried-eggs-and-apple-cabbage-slaw-173352-2.jpg',
+    is_available: true,
+    ordered_amount: 211,
+    ordered_date: new Date().getTime(),
+  },
+  {
+    id: 7,
+    name: 'Salmon Nigiri Sushi',
+    description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea ipsam doloremque deleniti quo earum nihil veniam laboriosam adipisci dicta? Earum voluptatum amet minus temporibus sunt dignissimos eaque eius facere repellat.',
+    price: 27000,
+    amount: 5,
+    avg_rating: 4.3,
+    category: [E_FOOD_CATEGORY.SUSHI],
+    imageUrl: 'https://img.delicious.com.au/1DhZnhaT/del/2022/08/parmesan-crumbed-chicken-schnitzel-fried-eggs-and-apple-cabbage-slaw-173352-2.jpg',
+    is_available: false,
+    ordered_amount: 46,
+    ordered_date: new Date().getTime(),
+  },
+  {
+    id: 8,
+    name: 'Curly Fries',
+    description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea ipsam doloremque deleniti quo earum nihil veniam laboriosam adipisci dicta? Earum voluptatum amet minus temporibus sunt dignissimos eaque eius facere repellat.',
+    price: 22000,
+    amount: 2,
+    avg_rating: 4.3,
+    category: [E_FOOD_CATEGORY.FRIES],
+    imageUrl: 'https://img.delicious.com.au/1DhZnhaT/del/2022/08/parmesan-crumbed-chicken-schnitzel-fried-eggs-and-apple-cabbage-slaw-173352-2.jpg',
+    is_available: true,
+    ordered_amount: 135,
+    ordered_date: new Date().getTime(),
+  },
+];
+
+export const mockUser: IUser = {
+  id: 1,
+  name: 'Mock User',
+  email: 'user@example.com',
+  avatar_url: '/assets/user.png',
+  cart_items: 3,
+};

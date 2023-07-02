@@ -1,7 +1,8 @@
 'use client';
+import { useState } from "react";
+
 import OrderSuccess from "@/components/OrderSuccess";
 import SummaryCard from "@/components/SummaryCard";
-import { useState } from "react";
 
 // TODO: use state for summary data
 
@@ -55,6 +56,10 @@ const dummyCarts = [
 
 const totalPayment = dummyCarts.reduce((acc, curr) => acc + (curr.price * curr.amount), 0);
 
+const classes = {
+  container: "pt-24 min-h-screen sm:w-3/4 lg:w-1/2 mx-auto pb-24",
+  title: "text-center font-bold text-xl mb-5 xl:text-2xl",
+};
 
 const Summary = () => {
   const [isSuccess, setIsSuccess] = useState(false);
@@ -65,8 +70,8 @@ const Summary = () => {
 
   const onSuccess = () => setIsSuccess(true);
   return (
-    <div className="pt-20 min-h-screen sm:w-3/4 lg:w-1/2 mx-auto pb-24">
-      <h1 className="text-center font-bold text-xl mb-5">Summary</h1>
+    <div className={classes.container}>
+      <h1 className={classes.title}>Summary</h1>
 
       <SummaryCard orders={dummyCarts} total={totalPayment} onSuccess={onSuccess} />
     </div>

@@ -2,20 +2,31 @@
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from 'next/navigation';
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import NavigationDrawer from "./NavigationDrawer";
 import classes from "./classes";
 import { ROUTES, ROUTE_MAP } from "./constants";
 import CartIcon from "../Icons/CartIcon";
+import { API_URL } from "@/constants/api";
+import { IUser } from "@/schema";
+import { handleApiError } from "@/utils/api";
 
 const Navbar = () => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const [userInfo, setUserInfo] = useState<IUser | null>(null);
   const pathname = usePathname();
 
   const closeDrawer = () => {
     setIsDrawerOpen(false);
   };
+
+  useEffect(() => {
+    fetch(API_URL.USER)
+      .then((res) => res.json())
+      .then((data) => setUserInfo(data.data))
+      .catch(handleApiError);
+  }, []);
 
   return (
     <>
@@ -36,13 +47,30 @@ const Navbar = () => {
               ))}
             </div>
 
-            <div className="flex items-center gap-3">
-              <Link href="/cart">
-                <div className="relative">
-                  <CartIcon size={30} className={classes.iconNav(pathname === ROUTE_MAP.CART)} />
-                  <span className={classes.cartAmount}>99</span>
-                </div>
-              </Link>
+            <div className="flex items-center gap-5">
+              {!!userInfo && (
+                <>
+                  <Link href="/cart">
+                    <div className="relative">
+                      <CartIcon
+                        size={30}
+                        title="Cart"
+                        className={classes.iconNav(pathname === ROUTE_MAP.CART)}
+                      />
+                      <span className={classes.cartAmount}>{userInfo.cart_items}</span>
+                    </div>
+                  </Link>
+
+                  <Image
+                    src={userInfo.avatar_url}
+                    width={30}
+                    height={30}
+                    alt={userInfo.name}
+                    className="rounded-full hidden sm:block"
+                    title={userInfo.name}
+                  />
+                </>
+              )}
 
               <Image
                 className={classes.mOpenNav}
@@ -60,7 +88,7 @@ const Navbar = () => {
         </div>
 
       </div>
-      {isDrawerOpen && <NavigationDrawer onClose={closeDrawer} />}
+      {isDrawerOpen && <NavigationDrawer user={userInfo} onClose={closeDrawer} />}
     </>
   );
 };
