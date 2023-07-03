@@ -1,16 +1,71 @@
 'use client';
+
+import ConfirmModal from '@/components/ConfirmModal';
+import { DEFAULT_MODAL } from '@/constants';
+import { API_URL, QUERY_KEY } from '@/constants/api';
+import { ICartData, IFood, IUser } from '@/schema';
 import { formatCurrency } from '@/utils';
-import Link from 'next/link';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
 
 interface IDetailActionsProps {
-  price: number;
+  data: IFood;
 }
 
 const DetailActions = ({
-  price,
+  data,
 }: IDetailActionsProps) => {
+  const queryClient = useQueryClient();
+  const router = useRouter();
   const [num, setNum] = useState(1);
+  const [modal, setModal] = useState(DEFAULT_MODAL);
+
+  const { mutate: addToCart } = useMutation({
+    mutationKey: [QUERY_KEY.CART, data.id],
+    mutationFn: async () => {
+      const res = await fetch(`${API_URL.CART}/${data.id}`, { method: 'POST' });
+      if (res.status !== 200) {
+        throw new Error('Failed to Fetched');
+      }
+    },
+    onSuccess: () => {
+      queryClient.setQueryData<ICartData[]>([QUERY_KEY.CART], (oldData) => {
+        if (oldData) {
+          return [
+            ...oldData,
+            {
+              ...data,
+              amount: num,
+            },
+          ];
+        }
+      });
+      queryClient.setQueryData<IUser>([QUERY_KEY.USER], (oldData) => {
+        if (oldData) {
+          return {
+            ...oldData,
+            cart_items: oldData.cart_items + 1,
+          };
+        }
+      });
+
+      setModal({
+        description: 'Your food has been added to cart',
+        confirmText: 'Back to Home',
+        onConfirm: () => router.push('/'),
+        show: true,
+      });
+    },
+    onError: () => {
+      setModal({
+        description: 'There is an Error while adding food to cart',
+        confirmText: 'Close',
+        onConfirm: () => setModal(DEFAULT_MODAL),
+        show: true,
+      });
+    },
+  });
 
   const addAmount = () => {
     setNum((prev) => prev + 1);
@@ -23,20 +78,33 @@ const DetailActions = ({
 
     setNum((prev) => prev - 1);
   };
+
+  const handleAddToCart = () => {
+    addToCart();
+  };
   return (
     <>
-      <div className="mt-5 flex justify-between">
-        <span className="font-semibold text-orange-600">{formatCurrency(price * num, 'IDR')}</span>
+      <div className="px-5">
+        <div className="mt-5 flex justify-between">
+          <span className="font-semibold text-orange-600">
+            {formatCurrency(data.price * num, 'IDR')}
+          </span>
 
-        <div className="flex gap-2">
-          <button className="px-2 bg-slate-200 rounded-md" onClick={decreaseAmount}>-</button>
-          <span>{num}</span>
-          <button className="px-2 bg-slate-200 rounded-md" onClick={addAmount}>+</button>
+          <div className="flex gap-2">
+            <button className="px-2 bg-slate-200 rounded-md" onClick={decreaseAmount}>-</button>
+            <span>{num}</span>
+            <button className="px-2 bg-slate-200 rounded-md" onClick={addAmount}>+</button>
+          </div>
         </div>
+        <button
+          onClick={handleAddToCart}
+          className="mt-5 w-full bg-orange-600 text-white py-2 rounded-full box-border"
+        >
+          Add to Cart
+        </button>
       </div>
-      <Link href="/cart">
-        <button className="mt-5 w-full bg-orange-600 text-white py-2 rounded-full">Add to Cart</button>
-      </Link>
+
+      <ConfirmModal {...modal} />
     </>
   );
 };

@@ -28,7 +28,6 @@ const DetailPage = async ({
     imageUrl,
     name,
     description,
-    price,
   } = resData.data;
 
   return (
@@ -46,8 +45,9 @@ const DetailPage = async ({
         <h1 className="font-bold text-xl">{name}</h1>
         <p>{description}</p>
 
-        <DetailActions price={price} />
       </div>
+
+      <DetailActions data={resData.data} />
     </div>
   );
 };

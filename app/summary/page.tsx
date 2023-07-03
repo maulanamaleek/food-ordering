@@ -1,79 +1,27 @@
-'use client';
-import { useState } from "react";
-
-import OrderSuccess from "@/components/OrderSuccess";
 import SummaryCard from "@/components/SummaryCard";
+import { API_URL } from "@/constants/api";
+import { ISummaryResponse } from "@/schema";
+import { IResponse } from "@/schema/api";
 
-// TODO: use state for summary data
-
-const dummyCarts = [
-  {
-    id: 1,
-    name: 'Food Name',
-    amount: 2,
-    price: 32000,
-    description: 'Food description with variant available, more description for long content',
-    imageUrl: "https://img.delicious.com.au/1DhZnhaT/del/2022/08/parmesan-crumbed-chicken-schnitzel-fried-eggs-and-apple-cabbage-slaw-173352-2.jpg",
-    orderedAt: Date.now(),
-  },
-  {
-    id: 2,
-    name: 'Spicy Meatball',
-    amount: 2,
-    price: 32000,
-    description: 'Food description with variant available, more description for long content',
-    imageUrl: "https://img.delicious.com.au/1DhZnhaT/del/2022/08/parmesan-crumbed-chicken-schnitzel-fried-eggs-and-apple-cabbage-slaw-173352-2.jpg",
-    orderedAt: Date.now(),
-  },
-  {
-    id: 3,
-    name: 'Margaritha Pizza',
-    amount: 2,
-    price: 32000,
-    description: 'Food description with variant available, more description for long content',
-    imageUrl: "https://img.delicious.com.au/1DhZnhaT/del/2022/08/parmesan-crumbed-chicken-schnitzel-fried-eggs-and-apple-cabbage-slaw-173352-2.jpg",
-    orderedAt: Date.now(),
-  },
-  {
-    id: 4,
-    name: 'Chicken Katsu Curry Ramen Super Long',
-    amount: 4,
-    price: 32000,
-    description: 'Food description with variant available, more description for long content. lorem ipsum dolor sit amet, lorem ipsum dolor sit amet',
-    imageUrl: "https://img.delicious.com.au/1DhZnhaT/del/2022/08/parmesan-crumbed-chicken-schnitzel-fried-eggs-and-apple-cabbage-slaw-173352-2.jpg",
-    orderedAt: Date.now(),
-  },
-  {
-    id: 5,
-    name: 'Chicken Katsu Curry Ramen Super Long',
-    amount: 2,
-    price: 32000,
-    description: 'Food description with variant available, more description for long content. lorem ipsum dolor sit amet, lorem ipsum dolor sit amet',
-    imageUrl: "https://img.delicious.com.au/1DhZnhaT/del/2022/08/parmesan-crumbed-chicken-schnitzel-fried-eggs-and-apple-cabbage-slaw-173352-2.jpg",
-    orderedAt: Date.now(),
-  },
-];
-
-const totalPayment = dummyCarts.reduce((acc, curr) => acc + (curr.price * curr.amount), 0);
 
 const classes = {
   container: "pt-24 min-h-screen sm:w-3/4 lg:w-1/2 mx-auto pb-24",
   title: "text-center font-bold text-xl mb-5 xl:text-2xl",
 };
 
-const Summary = () => {
-  const [isSuccess, setIsSuccess] = useState(false);
+export const dynamic = 'force-dynamic';
 
-  if (isSuccess) {
-    return <OrderSuccess />;
-  }
-
-  const onSuccess = () => setIsSuccess(true);
+const Summary = async () => {
+  const res = await fetch(API_URL.SUMMARY);
+  const resData = await res.json() as IResponse<ISummaryResponse>;
   return (
     <div className={classes.container}>
       <h1 className={classes.title}>Summary</h1>
 
-      <SummaryCard orders={dummyCarts} total={totalPayment} onSuccess={onSuccess} />
+      <SummaryCard
+        orders={resData.data.items}
+        total={resData.data.total_price}
+      />
     </div>
   );
 };

@@ -8,7 +8,7 @@ import { ROUTES } from "./constants";
 import { IUser } from "@/schema";
 
 interface INavigationDrawerProps {
-  user: IUser | null;
+  user?: IUser;
   onClose: () => void;
 }
 

@@ -3,6 +3,7 @@ import {
   ICartResponse,
   IFood,
   IHistory,
+  ISummaryResponse,
   IUser,
 } from "@/schema";
 
@@ -194,6 +195,48 @@ export const mockHistory: IHistory[] = [
     ordered_date: new Date().getTime(),
   },
 ];
+
+export const mockSummary: ISummaryResponse = {
+  total_price: 400000,
+  items: [
+    {
+      id: 4,
+      name: 'Red Velvet Cake',
+      description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea ipsam doloremque deleniti quo earum nihil veniam laboriosam adipisci dicta? Earum voluptatum amet minus temporibus sunt dignissimos eaque eius facere repellat.',
+      price: 21000,
+      avg_rating: 4.2,
+      category: [E_FOOD_CATEGORY.CAKE],
+      imageUrl: 'https://img.delicious.com.au/1DhZnhaT/del/2022/08/parmesan-crumbed-chicken-schnitzel-fried-eggs-and-apple-cabbage-slaw-173352-2.jpg',
+      is_available: true,
+      ordered_amount: 23,
+      amount: 1,
+    },
+    {
+      id: 5,
+      name: 'Mixed Vegetable Smoothie',
+      description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea ipsam doloremque deleniti quo earum nihil veniam laboriosam adipisci dicta? Earum voluptatum amet minus temporibus sunt dignissimos eaque eius facere repellat.',
+      price: 24000,
+      avg_rating: 4.9,
+      category: [E_FOOD_CATEGORY.DRINKS],
+      imageUrl: 'https://img.delicious.com.au/1DhZnhaT/del/2022/08/parmesan-crumbed-chicken-schnitzel-fried-eggs-and-apple-cabbage-slaw-173352-2.jpg',
+      is_available: true,
+      ordered_amount: 6,
+      amount: 1,
+    },
+    {
+      id: 6,
+      name: 'Fried Chicken + Rice',
+      description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea ipsam doloremque deleniti quo earum nihil veniam laboriosam adipisci dicta? Earum voluptatum amet minus temporibus sunt dignissimos eaque eius facere repellat.',
+      price: 15000,
+      avg_rating: 4.9,
+      category: [E_FOOD_CATEGORY.CHICKEN],
+      imageUrl: 'https://img.delicious.com.au/1DhZnhaT/del/2022/08/parmesan-crumbed-chicken-schnitzel-fried-eggs-and-apple-cabbage-slaw-173352-2.jpg',
+      is_available: true,
+      ordered_amount: 211,
+      amount: 2,
+    },
+  ],
+};
 
 export const mockUser: IUser = {
   id: 1,

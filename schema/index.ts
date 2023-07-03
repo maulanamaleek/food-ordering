@@ -52,6 +52,11 @@ export interface ICartResponse {
   items: ICartData[];
 }
 
+export interface ISummaryResponse {
+  total_price: number;
+  items: ICartData[]
+}
+
 export interface IHistory extends ICartData {
   ordered_date: number;
 }

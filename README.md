@@ -39,3 +39,4 @@ TODO:
 - add loading component to app router
 - add empty state component/page
 - add success payment/order animation page
+- handle fetch status code error

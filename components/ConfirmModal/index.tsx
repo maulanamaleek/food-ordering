@@ -1,38 +1,50 @@
 import classes from "./classes";
 
-interface IConfirmModalProps {
+export interface IConfirmModalProps {
+  show: boolean;
   cancelText?: string;
   confirmText?: string;
   description: string;
-  onClose: () => void;
-  onConfirm: () => void;
+  onClose?: () => void;
+  onConfirm?: () => void;
 }
 
 const ConfirmModal = ({
-  confirmText = 'Confirm',
-  cancelText = 'Cancel',
+  show,
+  confirmText,
+  cancelText,
   description,
   onClose,
   onConfirm,
 }: IConfirmModalProps) => {
+
+  if (!show) {
+    return null;
+  }
+
   return (
     <div className={classes.overlay}>
       <div className={classes.modalContainer}>
         <p className="text-center">{description}</p>
 
         <div className={classes.confirmActions}>
-          <button
-            onClick={onClose}
-            className={classes.cancelBtn}
-          >
-            {cancelText}
-          </button>
-          <button
-            onClick={onConfirm}
-            className={classes.confirmBtn}
-          >
-            {confirmText}
-          </button>
+          {!!cancelText && (
+            <button
+              onClick={onClose}
+              className={classes.cancelBtn}
+            >
+              {cancelText}
+            </button>
+          )}
+
+          {!!confirmText && (
+            <button
+              onClick={onConfirm}
+              className={classes.confirmBtn}
+            >
+              {confirmText}
+            </button>
+          )}
         </div>
       </div>
     </div>

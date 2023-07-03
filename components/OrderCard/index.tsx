@@ -8,6 +8,10 @@ import { formatCurrency, truncateChar } from "@/utils";
 import classes from "./classes";
 import useDetectMobileScreen from "@/hooks/useDetectMobileScreen";
 import ConfirmModal from "../ConfirmModal";
+import { DEFAULT_MODAL } from "@/constants";
+import { useQueryClient } from "@tanstack/react-query";
+import { QUERY_KEY } from "@/constants/api";
+import { ICartData, IUser } from "@/schema";
 
 const DEFAULT_AMOUNT = 1;
 
@@ -17,6 +21,7 @@ const DESKTOP_MAX_FOOD_NAME = 50;
 const DESKTOP_MAX_DESC = 100;
 
 interface ICartItemProps {
+  id: number;
   price: number;
   amount: number;
   name: string;
@@ -27,6 +32,7 @@ interface ICartItemProps {
 }
 
 const OrderCard = ({
+  id,
   price,
   amount,
   name,
@@ -35,8 +41,9 @@ const OrderCard = ({
   orderedAt,
   viewOnly = false,
 }: ICartItemProps) => {
+  const queryClient = useQueryClient();
   const [itemNum, setItemNum] = useState(DEFAULT_AMOUNT);
-  const [isShowModal, setIsShowModal] = useState(false);
+  const [modal, setModal] = useState(DEFAULT_MODAL);
   const isMobile = useDetectMobileScreen();
 
   const nameTruncateAmount = isMobile ? MOBILE_MAX_FOOD_NAME : DESKTOP_MAX_FOOD_NAME;
@@ -52,8 +59,31 @@ const OrderCard = ({
 
   const decreaseAmount = () => {
     if (itemNum === DEFAULT_AMOUNT) {
-      // TODO: when user confirm, remove specific item from cart
-      setIsShowModal(true);
+      setModal({
+        description: 'Decrementing amount to 0 will remove item from cart',
+        show: true,
+        cancelText: 'Cancel',
+        confirmText: 'Remove',
+        onConfirm: () => {
+          queryClient.setQueryData<IUser>([QUERY_KEY.USER], (oldData) => {
+            if (oldData) {
+              return {
+                ...oldData,
+                cart_items: oldData?.cart_items - 1,
+              };
+            }
+          });
+
+          queryClient.setQueryData<ICartData[]>([QUERY_KEY.CART], (oldData) => {
+            if (oldData) {
+              return oldData.filter((data) => data.id !== id);
+            }
+          });
+          setModal(DEFAULT_MODAL);
+
+        },
+        onClose: () => setModal(DEFAULT_MODAL),
+      });
       return;
     };
 
@@ -119,14 +149,7 @@ const OrderCard = ({
         </span>
       </div>
 
-      {isShowModal && (
-        <ConfirmModal
-          onClose={() => setIsShowModal(false)}
-          confirmText="Remove"
-          description="Decrement amount to 0 will remove this food from your cart"
-          onConfirm={() => setIsShowModal(false)}
-        />
-      )}
+      <ConfirmModal {...modal} />
     </div>
   );
 };

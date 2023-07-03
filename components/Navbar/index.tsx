@@ -1,32 +1,48 @@
 'use client';
+
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from 'next/navigation';
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 import NavigationDrawer from "./NavigationDrawer";
 import classes from "./classes";
 import { ROUTES, ROUTE_MAP } from "./constants";
 import CartIcon from "../Icons/CartIcon";
-import { API_URL } from "@/constants/api";
+import { API_URL, QUERY_KEY } from "@/constants/api";
 import { IUser } from "@/schema";
 import { handleApiError } from "@/utils/api";
+import { useQuery } from "@tanstack/react-query";
 
 const Navbar = () => {
+  const {
+    data: userData,
+    isError,
+    error,
+  } = useQuery<IUser>({
+    queryKey: [QUERY_KEY.USER],
+    queryFn: async () => {
+      const res = await fetch(API_URL.USER);
+      const resData = await res.json();
+
+      if (!resData) {
+        // will be catched in react query error
+        throw new Error('Failed to fetch api');
+      }
+
+      return resData.data;
+    },
+  });
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-  const [userInfo, setUserInfo] = useState<IUser | null>(null);
   const pathname = usePathname();
 
   const closeDrawer = () => {
     setIsDrawerOpen(false);
   };
 
-  useEffect(() => {
-    fetch(API_URL.USER)
-      .then((res) => res.json())
-      .then((data) => setUserInfo(data.data))
-      .catch(handleApiError);
-  }, []);
+  if (isError) {
+    handleApiError(error);
+  }
 
   return (
     <>
@@ -48,7 +64,7 @@ const Navbar = () => {
             </div>
 
             <div className="flex items-center gap-5">
-              {!!userInfo && (
+              {!!userData && (
                 <>
                   <Link href="/cart">
                     <div className="relative">
@@ -57,24 +73,24 @@ const Navbar = () => {
                         title="Cart"
                         className={classes.iconNav(pathname === ROUTE_MAP.CART)}
                       />
-                      <span className={classes.cartAmount}>{userInfo.cart_items}</span>
+                      <span className={classes.cartAmount}>{userData.cart_items}</span>
                     </div>
                   </Link>
 
                   <Image
-                    src={userInfo.avatar_url}
+                    src={userData.avatar_url}
                     width={30}
                     height={30}
-                    alt={userInfo.name}
+                    alt={userData.name}
                     className="rounded-full hidden sm:block"
-                    title={userInfo.name}
+                    title={userData.name}
                   />
                 </>
               )}
 
               <Image
                 className={classes.mOpenNav}
-                src="assets/menu.svg"
+                src="/assets/menu.svg"
                 width={30}
                 height={30}
                 alt="navigation menu"
@@ -88,7 +104,7 @@ const Navbar = () => {
         </div>
 
       </div>
-      {isDrawerOpen && <NavigationDrawer user={userInfo} onClose={closeDrawer} />}
+      {isDrawerOpen && <NavigationDrawer user={userData} onClose={closeDrawer} />}
     </>
   );
 };

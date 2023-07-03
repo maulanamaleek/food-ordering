@@ -25,6 +25,7 @@ const History = async () => {
         {history?.map((cartItem) => (
           <OrderCard
             key={cartItem.id}
+            id={cartItem.id}
             name={cartItem.name}
             price={cartItem.price}
             description={cartItem.description}
