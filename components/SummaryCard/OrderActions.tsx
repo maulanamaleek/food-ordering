@@ -64,7 +64,7 @@ const OrderActions = ({
           confirmText: 'Close',
           cancelText: '',
           description: 'There is an Error when creating your order',
-          onClose: () => setModal(DEFAULT_MODAL),
+          onConfirm: () => setModal(DEFAULT_MODAL),
         });
       })
       .finally(() => {

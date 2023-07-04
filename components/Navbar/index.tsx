@@ -2,9 +2,9 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname, useRouter } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 import { useState } from "react";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 
 import NavigationDrawer from "./NavigationDrawer";
 import classes from "./classes";
@@ -16,8 +16,13 @@ import { handleApiError } from "@/utils/api";
 import { E_RESPONSE_CODE } from "@/schema/api";
 
 const Navbar = () => {
-  const router = useRouter();
-  const queryClient = useQueryClient();
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+
+  // force trigger re-render by setting state on fetch complete
+  // because there is an intermittent case where component don't updated base on queryFn
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [render, setRender] = useState(false);
+  const pathname = usePathname();
   const {
     data: userData,
     isError,
@@ -33,11 +38,10 @@ const Navbar = () => {
         throw new Error('Failed to fetch api');
       }
 
+      setRender(true);
       return resData.data;
     },
   });
-  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-  const pathname = usePathname();
 
 
   const closeDrawer = () => {
@@ -48,17 +52,11 @@ const Navbar = () => {
     handleApiError(error);
   }
 
-  const toFoodList = () => {
-    queryClient.clear();
-    router.push('/');
-  };
-
-
   return (
     <>
       <div className={classes.container}>
         <div className={classes.content}>
-          <h1 className={classes.logo} onClick={toFoodList}>Food.</h1>
+          <Link className={classes.logo} href="/">Food.</Link>
 
           <div className="flex items-center gap-5">
             <div className={classes.links}>
@@ -74,7 +72,7 @@ const Navbar = () => {
             </div>
 
             <div className="flex items-center gap-5">
-              {!!userData && (
+              {!!userData?.id && (
                 <>
                   <Link href="/cart">
                     <div className="relative">

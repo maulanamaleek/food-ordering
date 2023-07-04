@@ -4,6 +4,7 @@ import { API_URL } from "@/constants/api";
 import { IFoodResponse } from "@/schema";
 import { IResponse } from "@/schema/api";
 import { fetchHandled, handleServerError } from "@/utils/api";
+import Image from "next/image";
 
 interface IHomeProps {
   params: any;
@@ -18,6 +19,8 @@ interface IHomeProps {
 const classes = {
   container: "flex min-h-screen flex-col px-4 gap-5 mx-auto sm:w-3/4 mt-24",
   title: "font-bold text-lg",
+  noItems: "font-semibold text-lg text-center",
+  noItemsContainer: "flex flex-col gap-5 items-center justify-center mt-10",
 };
 /* eslint-enable max-len */
 
@@ -57,7 +60,15 @@ const Home = async ({
   const foodList = (() => {
     if (!foods.length) {
       return (
-        <h1>Food is not found, please change your filter</h1>
+        <div className={classes.noItemsContainer}>
+          <Image
+            src="/assets/food-1.png"
+            width={220}
+            height={220}
+            alt="food"
+          />
+          <h1 className={classes.noItems}>Food is not found, please change your filter</h1>
+        </div>
       );
     }
     return <FoodList initialData={foodData.data} />;
