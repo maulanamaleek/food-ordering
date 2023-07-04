@@ -62,7 +62,7 @@ export const mockHistory: IHistory[] = [
     imageUrl: 'https://img.delicious.com.au/1DhZnhaT/del/2022/08/parmesan-crumbed-chicken-schnitzel-fried-eggs-and-apple-cabbage-slaw-173352-2.jpg',
     is_available: true,
     ordered_amount: 23,
-    ordered_date: new Date().getTime(),
+    ordered_date: 1688148997108,
   },
   {
     id: 6,
@@ -75,7 +75,7 @@ export const mockHistory: IHistory[] = [
     imageUrl: 'https://img.delicious.com.au/1DhZnhaT/del/2022/08/parmesan-crumbed-chicken-schnitzel-fried-eggs-and-apple-cabbage-slaw-173352-2.jpg',
     is_available: true,
     ordered_amount: 211,
-    ordered_date: new Date().getTime(),
+    ordered_date: 1688148997108,
   },
   {
     id: 7,
@@ -88,7 +88,7 @@ export const mockHistory: IHistory[] = [
     imageUrl: 'https://img.delicious.com.au/1DhZnhaT/del/2022/08/parmesan-crumbed-chicken-schnitzel-fried-eggs-and-apple-cabbage-slaw-173352-2.jpg',
     is_available: false,
     ordered_amount: 46,
-    ordered_date: new Date().getTime(),
+    ordered_date: 1688148997108,
   },
   {
     id: 8,
@@ -101,7 +101,7 @@ export const mockHistory: IHistory[] = [
     imageUrl: 'https://img.delicious.com.au/1DhZnhaT/del/2022/08/parmesan-crumbed-chicken-schnitzel-fried-eggs-and-apple-cabbage-slaw-173352-2.jpg',
     is_available: true,
     ordered_amount: 135,
-    ordered_date: new Date().getTime(),
+    ordered_date: 1688148997108,
   },
 ];
 
