@@ -4,6 +4,7 @@ import OrderCard from "@/components/OrderCard";
 import { API_URL } from "@/constants/api";
 import { IHistory } from "@/schema";
 import { IResponse } from "@/schema/api";
+import { fetchHandled, handleServerError } from "@/utils/api";
 
 export const metadata: Metadata = {
   title: 'Order History - Food Ordering App',
@@ -13,9 +14,16 @@ export const metadata: Metadata = {
 export const dynamic = 'force-dynamic';
 
 const History = async () => {
-  const res = await fetch(API_URL.HISTORY);
-  const resData = await res.json() as IResponse<IHistory[]>;
-  const history = resData.data;
+  const {
+    data: historyRes,
+    isError,
+  } = await fetchHandled<IResponse<IHistory[]>>(API_URL.HISTORY);
+  const history = historyRes.data;
+
+  if (isError) {
+    // will catch in `app/error.tsx` error boundary
+    handleServerError();
+  }
 
   return (
     <div className="pt-24 min-h-screen sm:w-3/4 lg:w-1/2 mx-auto">

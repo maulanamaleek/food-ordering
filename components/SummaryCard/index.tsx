@@ -36,7 +36,7 @@ const SummaryCard = ({
 
       </div>
 
-      <OrderActions total={total} />
+      {!!orders.length && <OrderActions total={total} />}
     </>
   );
 };

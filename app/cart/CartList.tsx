@@ -12,6 +12,7 @@ import LoadingOverlay from '@/components/LoadingOverlay';
 import { DEFAULT_MODAL } from '@/constants';
 import ConfirmModal from '@/components/ConfirmModal';
 import { API_URL, QUERY_KEY } from '@/constants/api';
+import { E_RESPONSE_CODE } from '@/schema/api';
 
 interface ICartListProps {
   items: ICartData[];
@@ -36,7 +37,12 @@ const CartList = ({
     mutate: deleteAllCart,
   } = useMutation({
     mutationFn: async () => {
-      await fetch(API_URL.CART, { method: 'DELETE' });
+      const res = await fetch(API_URL.CART, { method: 'DELETE' });
+
+      if (res.status !== E_RESPONSE_CODE.SUCCESS) {
+        // will be catched in react query error
+        throw new Error('Failed to Fetched');
+      }
     },
     onMutate: () => {
       queryClient.invalidateQueries([QUERY_KEY.USER]);

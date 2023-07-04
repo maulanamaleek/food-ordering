@@ -4,6 +4,7 @@ import ConfirmModal from '@/components/ConfirmModal';
 import { DEFAULT_MODAL } from '@/constants';
 import { API_URL, QUERY_KEY } from '@/constants/api';
 import { ICartData, IFood, IUser } from '@/schema';
+import { E_RESPONSE_CODE } from '@/schema/api';
 import { formatCurrency } from '@/utils';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
@@ -25,7 +26,9 @@ const DetailActions = ({
     mutationKey: [QUERY_KEY.CART, data.id],
     mutationFn: async () => {
       const res = await fetch(`${API_URL.CART}/${data.id}`, { method: 'POST' });
-      if (res.status !== 200) {
+
+      if (res.status !== E_RESPONSE_CODE.SUCCESS) {
+        // will be catched in react query error
         throw new Error('Failed to Fetched');
       }
     },

@@ -3,6 +3,7 @@
 import { FormEventHandler, useEffect, useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { useQueryClient } from "@tanstack/react-query";
 
 import SelectBox from "./SelectBox";
 import MobileFilter from "./MobileFilter";
@@ -25,6 +26,7 @@ const Filter = ({
   category: propCategory,
   rating: propRating,
 }: IFilterProps) => {
+  const queryClient = useQueryClient();
   const router = useRouter();
   const [category, setCategory] = useState({
     displayName: 'All',
@@ -38,16 +40,16 @@ const Filter = ({
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
   useEffect(() => {
-    !!propSearch && setSearch(propSearch);
+    setSearch(propSearch || '');
 
-    !!propCategory && setCategory({
-      displayName: CATEGORY_PLACEHOLDER_MAP[propCategory] || 'Select',
-      value: propCategory,
+    setCategory({
+      displayName: propCategory ? CATEGORY_PLACEHOLDER_MAP[propCategory] : 'All',
+      value: propCategory ?? 'all',
     });
 
-    !!propRating && setRating({
-      displayName: RATING_PLACEHOLDER_MAP[propRating] || 'Select',
-      value: propRating,
+    setRating({
+      displayName: propRating ? RATING_PLACEHOLDER_MAP[propRating] : 'All',
+      value: propRating ?? 'all',
     });
   }, [propSearch, propCategory, propRating]);
 
@@ -58,13 +60,14 @@ const Filter = ({
     const url = new URL(location.href);
     url.searchParams.set('category', category.value);
     url.searchParams.set('rating', rating.value);
+    queryClient.clear();
 
     if (!search) {
       url.searchParams.delete('search');
     } else {
       url.searchParams.set('search', search);
     }
-    router.replace(url.href);
+    router.push(url.href);
   };
 
   return (

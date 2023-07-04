@@ -1,7 +1,7 @@
 'use client';
 
 import Image from "next/image";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import classes from "./classes";
 import useClickOutside from "@/hooks/useClickOutside";
 import { IFoodFilter } from "@/schema";
@@ -14,6 +14,8 @@ interface ISelectBoxProps {
   label: string;
   onSelect: (value: { displayName: string, value: string }) => void;
 }
+
+const DEFAULT_VALUE = 'all';
 
 const SelectBox = ({
   className,
@@ -36,6 +38,12 @@ const SelectBox = ({
     setDisplayName(opt.displayName);
     setIsOpen(false);
   };
+
+  useEffect(() => {
+    if (value === DEFAULT_VALUE) {
+      setDisplayName('');
+    }
+  }, [value]);
 
   const placeholderElem = (() => {
     if (displayName) {
