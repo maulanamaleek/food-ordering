@@ -35,8 +35,7 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 
 
 TODO: 
-- add error fallback page
-- add loading component to app router
 - add empty state component/page
-- add success payment/order animation page
-- handle fetch status code error
+- add tailwind group class
+- add more items and pagination
+- self test

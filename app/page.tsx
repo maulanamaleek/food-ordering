@@ -3,6 +3,7 @@ import FoodCard from "@/components/FoodCard";
 import { API_URL } from "@/constants/api";
 import { IFood } from "@/schema";
 import { IResponse } from "@/schema/api";
+import { fetchHandled, handleServerError } from "@/utils/api";
 
 interface IHomeProps {
   params: any;
@@ -38,16 +39,22 @@ const Home = async ({
     apiUrl.searchParams.set('search', search);
   }
 
-  const res = await fetch(apiUrl.href);
-  const resData = await res.json() as IResponse<IFood[]>;
+  const {
+    data: foodData,
+    isError,
+  } = await fetchHandled<IResponse<IFood[]>>(apiUrl.href);
+
+  if (isError) {
+    handleServerError();
+  }
 
   const foodList = (() => {
-    if (!resData.data.length) {
+    if (!foodData.data.length) {
       return (
         <h1>Food is not found, please change your filter</h1>
       );
     }
-    return resData.data.map((food) => (
+    return foodData.data.map((food) => (
       <FoodCard
         key={food.id}
         data={food}

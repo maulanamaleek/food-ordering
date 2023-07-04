@@ -13,6 +13,7 @@ import { API_URL, QUERY_KEY } from "@/constants/api";
 import { IUser } from "@/schema";
 import { handleApiError } from "@/utils/api";
 import { useQuery } from "@tanstack/react-query";
+import { E_RESPONSE_CODE } from "@/schema/api";
 
 const Navbar = () => {
   const {
@@ -25,7 +26,7 @@ const Navbar = () => {
       const res = await fetch(API_URL.USER);
       const resData = await res.json();
 
-      if (!resData) {
+      if (res.status !== E_RESPONSE_CODE.SUCCESS || !resData) {
         // will be catched in react query error
         throw new Error('Failed to fetch api');
       }

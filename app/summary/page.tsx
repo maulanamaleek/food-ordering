@@ -2,6 +2,7 @@ import SummaryCard from "@/components/SummaryCard";
 import { API_URL } from "@/constants/api";
 import { ISummaryResponse } from "@/schema";
 import { IResponse } from "@/schema/api";
+import { fetchHandled, handleServerError } from "@/utils/api";
 
 
 const classes = {
@@ -12,15 +13,22 @@ const classes = {
 export const dynamic = 'force-dynamic';
 
 const Summary = async () => {
-  const res = await fetch(API_URL.SUMMARY);
-  const resData = await res.json() as IResponse<ISummaryResponse>;
+  const {
+    data: summaryData,
+    isError,
+  } = await fetchHandled<IResponse<ISummaryResponse>>(API_URL.SUMMARY);
+
+  if (isError) {
+    handleServerError();
+  }
+
   return (
     <div className={classes.container}>
       <h1 className={classes.title}>Summary</h1>
 
       <SummaryCard
-        orders={resData.data.items}
-        total={resData.data.total_price}
+        orders={summaryData.data.items}
+        total={summaryData.data.total_price}
       />
     </div>
   );

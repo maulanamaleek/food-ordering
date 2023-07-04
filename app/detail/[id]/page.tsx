@@ -3,6 +3,7 @@ import DetailActions from "./DetailActions";
 import { IFood } from "@/schema";
 import { IResponse } from "@/schema/api";
 import { API_URL } from "@/constants/api";
+import { fetchHandled, handleServerError } from "@/utils/api";
 
 // TODO: implement dynamic metadata
 
@@ -15,20 +16,20 @@ interface IDetailPageProps {
 const DetailPage = async ({
   params,
 }: IDetailPageProps) => {
-  // TODO: handle RESPONSE ERROR
-  const res = await fetch(`${API_URL.FOOD}/${params.id}`);
-  const resData = await res.json() as IResponse<IFood>;
+  const {
+    data: foodData,
+    isError,
+  } = await fetchHandled<IResponse<IFood>>(`${API_URL.FOOD}/${params.id}`);
 
-  // TODO: handle not found
-  if (!resData) {
-    return null;
+  if (isError) {
+    handleServerError();
   }
 
   const {
     imageUrl,
     name,
     description,
-  } = resData.data;
+  } = foodData.data;
 
   return (
     <div className="pt-16 sm:pt-24 min-h-screen sm:w-3/4 lg:w-1/2 mx-auto pb-24">
@@ -47,7 +48,7 @@ const DetailPage = async ({
 
       </div>
 
-      <DetailActions data={resData.data} />
+      <DetailActions data={foodData.data} />
     </div>
   );
 };

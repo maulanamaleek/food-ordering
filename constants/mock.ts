@@ -197,7 +197,7 @@ export const mockHistory: IHistory[] = [
 ];
 
 export const mockSummary: ISummaryResponse = {
-  total_price: 400000,
+  total_price: 75000,
   items: [
     {
       id: 4,

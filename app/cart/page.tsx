@@ -3,20 +3,26 @@ import { ICartResponse } from "@/schema";
 import { IResponse } from "@/schema/api";
 import classes from "./classes";
 import CartList from "./CartList";
+import { fetchHandled, handleServerError } from "@/utils/api";
 
 
 export const dynamic = 'force-dynamic';
 
 const Cart = async () => {
-  const res = await fetch(API_URL.CART);
-  const resData = await res.json() as IResponse<ICartResponse>;
-  const cart = resData.data.items;
+  const {
+    data: cartData,
+    isError,
+  } = await fetchHandled<IResponse<ICartResponse>>(API_URL.CART);
+
+  if (isError) {
+    handleServerError();
+  }
 
   return (
     <div className={classes.container}>
       <h1 className={classes.title}>Cart</h1>
 
-      <CartList items={cart} />
+      <CartList items={cartData.data.items} />
     </div>
   );
 };
