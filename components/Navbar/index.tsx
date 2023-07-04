@@ -2,8 +2,9 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { useState } from "react";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 
 import NavigationDrawer from "./NavigationDrawer";
 import classes from "./classes";
@@ -12,10 +13,11 @@ import CartIcon from "../Icons/CartIcon";
 import { API_URL, QUERY_KEY } from "@/constants/api";
 import { IUser } from "@/schema";
 import { handleApiError } from "@/utils/api";
-import { useQuery } from "@tanstack/react-query";
 import { E_RESPONSE_CODE } from "@/schema/api";
 
 const Navbar = () => {
+  const router = useRouter();
+  const queryClient = useQueryClient();
   const {
     data: userData,
     isError,
@@ -37,6 +39,7 @@ const Navbar = () => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const pathname = usePathname();
 
+
   const closeDrawer = () => {
     setIsDrawerOpen(false);
   };
@@ -45,11 +48,17 @@ const Navbar = () => {
     handleApiError(error);
   }
 
+  const toFoodList = () => {
+    queryClient.clear();
+    router.push('/');
+  };
+
+
   return (
     <>
       <div className={classes.container}>
         <div className={classes.content}>
-          <Link href="/" className={classes.logo}>Food.</Link>
+          <h1 className={classes.logo} onClick={toFoodList}>Food.</h1>
 
           <div className="flex items-center gap-5">
             <div className={classes.links}>

@@ -18,6 +18,7 @@ export const API_URL = {
 };
 
 export const QUERY_KEY = {
+  FOOD: 'FOOD',
   USER: 'USER',
   CART: 'CART',
   SUMMARY: 'SUMMARY',

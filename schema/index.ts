@@ -34,6 +34,11 @@ export interface IFood {
   category: E_FOOD_CATEGORY[];
 }
 
+export interface IFoodResponse {
+  foods: IFood[];
+  has_next: boolean;
+}
+
 export interface IFoodFilterState {
   displayName: string;
   value: string;

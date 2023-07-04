@@ -11,7 +11,7 @@ const classes = {
   cartAmount: "absolute w-5 h-5 flex items-center justify-center top-1 -right-2 bg-red-500 px-1 rounded-full text-xs text-white",
 
   // mobile only
-  mOpenNav: "sm:hidden",
+  mOpenNav: "sm:hidden cursor-pointer",
   mLinks: "relative top-10 flex gap-4 flex-col",
 };
 /* eslint-enable max-len */

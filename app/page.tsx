@@ -1,7 +1,7 @@
 import Filter from "@/components/Filter";
-import FoodCard from "@/components/FoodCard";
+import FoodList from "@/components/FoodList";
 import { API_URL } from "@/constants/api";
-import { IFood } from "@/schema";
+import { IFoodResponse } from "@/schema";
 import { IResponse } from "@/schema/api";
 import { fetchHandled, handleServerError } from "@/utils/api";
 
@@ -16,11 +16,12 @@ interface IHomeProps {
 
 /* eslint-disable max-len */
 const classes = {
-  foodList: "flex flex-wrap w-full justify-between sm:justify-center lg:justify-start gap-x-2 gap-y-5 pb-10 xl:gap-x-2 xl:gap-y-8",
   container: "flex min-h-screen flex-col px-4 gap-5 mx-auto sm:w-3/4 mt-24",
   title: "font-bold text-lg",
 };
 /* eslint-enable max-len */
+
+export const dynamic = 'force-dynamic';
 
 const Home = async ({
   searchParams,
@@ -39,27 +40,27 @@ const Home = async ({
     apiUrl.searchParams.set('search', search);
   }
 
+
   const {
     data: foodData,
     isError,
-  } = await fetchHandled<IResponse<IFood[]>>(apiUrl.href);
+  } = await fetchHandled<IResponse<IFoodResponse>>(apiUrl.href);
 
   if (isError) {
     handleServerError();
   }
 
+  const {
+    foods,
+  } = foodData.data;
+
   const foodList = (() => {
-    if (!foodData.data.length) {
+    if (!foods.length) {
       return (
         <h1>Food is not found, please change your filter</h1>
       );
     }
-    return foodData.data.map((food) => (
-      <FoodCard
-        key={food.id}
-        data={food}
-      />
-    ));
+    return <FoodList initialData={foodData.data} />;
 
   })();
 
@@ -71,12 +72,11 @@ const Home = async ({
         category={category}
       />
 
-      <h1 className={classes.title}>Discover the best foods &rarr;</h1>
-      <div
-        className={classes.foodList}
-      >
-        {foodList}
-      </div>
+      {!!foods.length && (
+        <h1 className={classes.title}>Discover the best foods &rarr;</h1>
+      )}
+
+      {foodList}
     </main>
   );
 };
