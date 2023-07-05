@@ -26,7 +26,7 @@ const History = async () => {
   }
 
   return (
-    <div className="pt-24 min-h-screen sm:w-3/4 lg:w-1/2 mx-auto">
+    <div className="pt-24 min-h-screen sm:w-3/4 lg:w-1/2 mx-auto pb-10">
       <h1 className="text-center font-bold text-xl xl:text-2xl">History</h1>
 
       <div className="mt-5 px-5 flex flex-col gap-4">

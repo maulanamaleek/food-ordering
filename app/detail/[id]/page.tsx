@@ -1,17 +1,41 @@
 import Image from "next/image";
+import { Metadata } from "next";
+
 import DetailActions from "./DetailActions";
 import { IFood } from "@/schema";
 import { IResponse } from "@/schema/api";
 import { API_URL } from "@/constants/api";
 import { fetchHandled, handleServerError } from "@/utils/api";
 
-// TODO: implement dynamic metadata
-
 interface IDetailPageProps {
   params: {
     id: string;
   }
 }
+
+export const generateMetadata = async (
+  { params }: IDetailPageProps
+): Promise<Metadata> => {
+  const {
+    data: foodData,
+    isError,
+  } = await fetchHandled<IResponse<IFood>>(`${API_URL.FOOD}/${params.id}`);
+
+  if (isError) {
+    return {
+      title: 'Food Detail',
+      description: 'Food Detail - Add to your cart',
+    };
+  }
+
+  return {
+    title: foodData.data.name,
+    description: foodData.data.description.slice(0, 30),
+  };
+};
+
+// re-validate every 10 minutes
+export const revalidate = 600;
 
 const DetailPage = async ({
   params,
