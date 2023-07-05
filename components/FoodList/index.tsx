@@ -29,7 +29,7 @@ const FoodList = ({
   const {
     data: foodsData,
     fetchNextPage,
-    isLoading,
+    isFetching,
     isError,
     hasNextPage,
   } = useInfiniteQuery<IFoodResponse>(
@@ -71,7 +71,7 @@ const FoodList = ({
   }, [initialData, queryClient]);
 
 
-  if (isLoading) {
+  if (isFetching) {
     return <LoadingOverlay />;
   }
 
