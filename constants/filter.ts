@@ -82,6 +82,8 @@ export const RATING_FILTER: IFoodFilter[] = [
   },
 ];
 
+export const DEFAULT_RATING = RATING_FILTER[0].value;
+
 export const CATEGORY_PLACEHOLDER_MAP = createPlaceholderMap(CATEGORY_FILTER_VAL);
 
 export const RATING_PLACEHOLDER_MAP = createPlaceholderMap(RATING_FILTER);

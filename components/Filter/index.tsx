@@ -1,6 +1,12 @@
 'use client';
 
-import { FormEventHandler, useEffect, useState } from "react";
+import {
+  FormEventHandler,
+  Fragment,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useQueryClient } from "@tanstack/react-query";
@@ -11,9 +17,11 @@ import classes from "./classes";
 import {
   CATEGORY_FILTER_VAL,
   CATEGORY_PLACEHOLDER_MAP,
+  DEFAULT_RATING,
   RATING_FILTER,
   RATING_PLACEHOLDER_MAP,
 } from "@/constants/filter";
+import { E_FOOD_CATEGORY } from "@/schema";
 
 interface IFilterProps {
   search?: string;
@@ -38,6 +46,8 @@ const Filter = ({
   });
   const [search, setSearch] = useState('');
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  // hacky state to trigger useMemo element, only update element when user click apply
+  const [filterCount, setFilterCount] = useState(1);
 
   useEffect(() => {
     setSearch(propSearch || '');
@@ -53,6 +63,10 @@ const Filter = ({
     });
   }, [propSearch, propCategory, propRating]);
 
+  useEffect(() => {
+    setFilterCount((p) => p + 1);
+  }, []);
+
   const onSubmit: FormEventHandler<HTMLFormElement> = (e) => {
     e?.preventDefault();
 
@@ -67,8 +81,53 @@ const Filter = ({
     } else {
       url.searchParams.set('search', search);
     }
+    setFilterCount((p) => p + 1);
     router.push(url.href);
   };
+
+  const filterDescElem = useMemo(() => {
+    const isNoProp = !propSearch && !propCategory && !propRating;
+    const isEmptFilter = !search
+      && category.value === E_FOOD_CATEGORY.ALL
+      && rating.value === DEFAULT_RATING;
+
+    if (filterCount === 0) {
+      return null;
+    }
+    const elems: JSX.Element[] = [];
+
+    if (isEmptFilter || isNoProp) {
+      return null;
+    }
+
+    elems.push(
+      <Fragment key="filter-desc">Viewing result(s) for</Fragment>
+    );
+
+    if (search) {
+      elems.push(
+        <Fragment key="filter-search">&nbsp;<b>&quot;{search}&quot;</b></Fragment>
+      );
+    }
+
+    if (category.value !== E_FOOD_CATEGORY.ALL) {
+      elems.push(
+        <Fragment key="filter-category">
+          &nbsp;category: <b>&quot;{category.displayName}&quot;</b>
+        </Fragment>
+      );
+    }
+
+    if (rating.value !== DEFAULT_RATING) {
+      elems.push(
+        <Fragment key="filter-rating">
+          &nbsp;rating: <b>&quot;{rating.displayName}&quot;</b>
+        </Fragment>
+      );
+    }
+
+    return elems;
+  }, [filterCount, propSearch, propCategory, propRating]);
 
   return (
     <>
@@ -114,7 +173,12 @@ const Filter = ({
       <p
         className="text-sm bg-orange-100 w-fit px-2 py-1 rounded-md"
       >
-        🍕 Click <b>Apply</b> Button to implement search and filter(s)
+        &#127829; Click <b>Apply</b> Button to implement search and filter(s)
+      </p>
+
+      {/* defining height to reduce Layout Shift a bit */}
+      <p className="min-h-8 md:h-8">
+        {filterDescElem}
       </p>
 
       <MobileFilter

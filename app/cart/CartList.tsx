@@ -129,7 +129,7 @@ const CartList = ({
         className={classes.removeBtn}
         onClick={handleEmptyCartClick}
       >
-        🗑️ Empty Cart
+        &#x1f5d1; Empty Cart
       </button>
       <div className={classes.orderList}>
         {cartItems?.map((cartItem) => (
