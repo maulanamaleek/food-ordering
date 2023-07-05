@@ -19,6 +19,8 @@ interface IFoodListProps {
 const classes = {
   foodList: "flex flex-wrap w-full justify-between sm:justify-center lg:justify-start gap-x-2 gap-y-5 pb-10 xl:gap-x-2 xl:gap-y-8",
   seeMore: "mb-20 bg-orange-600 text-white w-fit mx-auto px-5 py-1 rounded-md",
+  loader: "inline-block h-8 w-8 animate-spin text-orange-600 rounded-full border-4 b border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]",
+  text: "!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]",
 };
 /* eslint-enable max-len */
 
@@ -29,6 +31,7 @@ const FoodList = ({
   const {
     data: foodsData,
     fetchNextPage,
+    isLoading,
     isFetching,
     isError,
     hasNextPage,
@@ -71,7 +74,7 @@ const FoodList = ({
   }, [initialData, queryClient]);
 
 
-  if (isFetching) {
+  if (isLoading) {
     return <LoadingOverlay />;
   }
 
@@ -102,17 +105,33 @@ const FoodList = ({
     });
   })();
 
+  const actionsElem = (() => {
+    if (isFetching) {
+      return (
+        <div className={classes.loader}>
+          <span className={classes.text}>Loading...</span>
+        </div>
+      );
+    }
+
+    if (hasNextPage) {
+      return (
+        <button className={classes.seeMore} onClick={handleNext}>
+          See More 	&darr;
+        </button>
+      );
+    }
+
+    return null;
+  })();
+
   return (
     <>
       <div className={classes.foodList}>
         {foodListElem}
       </div>
 
-      {hasNextPage && (
-        <button className={classes.seeMore} onClick={handleNext}>
-          See More 	&darr;
-        </button>
-      )}
+      {actionsElem}
     </>
   );
 };
